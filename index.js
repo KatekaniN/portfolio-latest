@@ -1785,7 +1785,7 @@ class Windows11Manager {
         window: "personal",
       },
       { icon: "folder", label: "Resume", window: "resume" },
-      { icon: "kate", label: "AI Assistant", window: "aiChat" },
+      { icon: "kate", label: "Chatbot", window: "flowChat" },
       {
         icon: "fun-room",
         label: "Games",
@@ -1834,10 +1834,10 @@ class Windows11Manager {
       },
       {
         icon: "kate",
-        title: "AI Portfolio Assistant",
-        subtitle: "Recently added",
+        title: "Chatbot",
+        subtitle: "Tap through Kate's journey",
         time: "Today",
-        action: "openWindow('aiChat')",
+        action: "openWindow('flowChat')",
       },
       {
         icon: "email",
@@ -1916,12 +1916,6 @@ class Windows11Manager {
         title: "Latest Projects",
         description: "View my recent development work",
         action: "window.open('https://github.com/KatekaniN', '_blank')",
-      },
-      {
-        icon: "fas fa-robot",
-        title: "AI Portfolio Assistant",
-        description: "Chat with my AI assistant about my experience",
-        action: "openWindow('aiChat')",
       },
       {
         icon: "fas fa-envelope",
@@ -2135,11 +2129,6 @@ class Windows11Manager {
         id: "resume",
         title: "Resume",
         icon: "fas fa-file-alt",
-      },
-      {
-        id: "aiChat",
-        title: "AI Assistant",
-        icon: "fas fa-robot",
       },
       {
         id: "games",
@@ -2402,7 +2391,6 @@ class Windows11Manager {
       contact: "Contact",
       personal: "My Journey",
       resume: "Resume",
-      aiChat: "AI Assistant",
       games: "Games",
     };
     return titles[windowId] || windowId;

@@ -94,6 +94,7 @@
       </div>
 
       <!-- AI Assistant Icon -->
+      <!--
       <div
         class="desktop-icon ai-chat-icon"
         style="top: 440px; left: 60px"
@@ -103,6 +104,19 @@
           <img src="./icons/kate.png" alt="ai assistant" />
         </div>
         <div class="icon-label">AI Assistant</div>
+      </div>
+      -->
+
+      <!-- Guided Chat Icon -->
+      <div
+        class="desktop-icon flow-chat-icon"
+        style="top: 440px; left: 60px"
+        data-window="flowChat"
+      >
+        <div class="icon-image">
+          <img src="./icons/kate.png" alt="chatbot" />
+        </div>
+        <div class="icon-label">Chatbot</div>
       </div>
 
       <!-- Games Desktop Icon -->
@@ -189,15 +203,16 @@
               </h2>
               <div class="section-content">
                 <p class="overview-text">
-                  Hey there! I'm Katekani, and I'm honestly still amazed that I get
-                  to call myself a developer. Just a few years ago, I was
-                  studying Mathematical Statistics at the University of Pretoria, hoping to become a data scientist. But then I discovered coding, and it felt like coming home. I love
-                  <strong>building things </strong>.
-                  <br /><br />
-                  I initially fell in love with React and Node.js then Next.js because they let me turn my
-                  wild ideas into something real I can see and interact with. I'm currently
-                  exploring learning Java and learning how to build and use
-                  LLMs.
+                  Hey there! I'm Katekani, and I'm honestly still amazed that I
+                  get to call myself a developer. Just a few years ago, I was
+                  studying Mathematical Statistics at the University of
+                  Pretoria, hoping to become a data scientist. But then I
+                  discovered coding, and it felt like coming home. I love
+                  <strong>building things </strong>. <br /><br />
+                  I initially fell in love with React and Node.js then Next.js
+                  because they let me turn my wild ideas into something real I
+                  can see and interact with. I'm currently exploring learning
+                  Java and learning how to build and use LLMs.
                 </p>
               </div>
             </div>
@@ -217,8 +232,10 @@
                     <div class="competency-content">
                       <h3>Full Stack Magic</h3>
                       <p>
-                        I work with React or Next.js on the frontend and Node.js on the
-                        backend, with PostgreSQL keeping everything organized and RESTful or GraphQL APIs connecting the dots
+                        I work with React or Next.js on the frontend and Node.js
+                        on the backend, with PostgreSQL keeping everything
+                        organized and RESTful or GraphQL APIs connecting the
+                        dots
                       </p>
                     </div>
                   </div>
@@ -229,9 +246,9 @@
                     <div class="competency-content">
                       <h3>Mobile Adventures</h3>
                       <p>
-                        I've recently self-taught myself React Native because I wanted to build a
-                        plant care app, and now I'm slightly obsessed with
-                        mobile development
+                        I've recently self-taught myself React Native because I
+                        wanted to build a plant care app, and now I'm slightly
+                        obsessed with mobile development
                       </p>
                     </div>
                   </div>
@@ -1220,140 +1237,75 @@
         </div>
       </div>
 
+      <!-- AI Portfolio Assistant window removed -->
+      <!--
       <div
         class="window"
         id="aiChat"
         style="top: 150px; left: 250px; width: 450px; height: 550px"
       >
+        ...existing AI assistant window markup...
+      </div>
+      -->
+
+      <div
+        class="window"
+        id="flowChat"
+        style="top: 200px; left: 680px; width: 480px; height: 650px"
+      >
         <div class="window-header">
-          <div class="window-title">AI Portfolio Assistant</div>
+          <div class="window-title">
+            <img
+              src="./icons/kate.png"
+              alt="chatbot icon"
+              class="flowchat-title-icon"
+            />
+            Chatbot
+          </div>
           <div class="window-controls">
             <button
               class="window-control minimize"
-              onclick="windowManager.minimizeWindow('aiChat')"
+              onclick="windowManager.minimizeWindow('flowChat')"
               title="Minimize"
             ></button>
             <button
               class="window-control maximize"
-              onclick="windowManager.maximizeWindow('aiChat')"
+              onclick="windowManager.maximizeWindow('flowChat')"
               title="Maximize"
             ></button>
             <button
               class="window-control close"
-              onclick="windowManager.closeWindow('aiChat')"
+              onclick="windowManager.closeWindow('flowChat')"
               title="Close"
             ></button>
           </div>
         </div>
-        <div class="window-content ai-chat-content">
-          <!-- Chat Container -->
-          <div class="ai-chat-container">
-            <div class="ai-chat-messages" id="chatMessages">
-              <!-- Welcome Message -->
-              <div class="ai-message bot-message">
-                <div class="ai-message-avatar">
-                  <div class="bot-avatar">
-                    <img
-                      class="ai-avatar"
-                      src="./icons/kate.png"
-                      alt="ai icon"
-                    />
-                  </div>
-                </div>
-                <div class="ai-message-content">
-                  <div class="ai-message-header">
-                    <span class="ai-message-author">AI Assistant</span>
-                    <span class="ai-message-timestamp">Just now</span>
-                  </div>
-                  <div class="ai-message-text">
-                    Hello! I'm Katekani's AI portfolio assistant. I can help you
-                    learn about her experience as a Junior Full Stack Developer
-                    at Ogilvy South Africa, her projects, and technical skills.
-                    <br /><br />
-                    Try asking me:
-                    <div class="ai-suggestions">
-                      <button
-                        class="ai-suggestion-btn"
-                        data-question="Tell me about Katekani's experience"
-                      >
-                        "Tell me about Katekani's experience"
-                      </button>
-                      <button
-                        class="ai-suggestion-btn"
-                        data-question="What projects has she worked on?"
-                      >
-                        "What projects has she worked on?"
-                      </button>
-                      <button
-                        class="ai-suggestion-btn"
-                        data-question="What are her technical skills?"
-                      >
-                        "What are her technical skills?"
-                      </button>
-                      <button
-                        class="ai-suggestion-btn"
-                        data-question="How can I contact her?"
-                      >
-                        "How can I contact her?"
-                      </button>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div class="window-content flowchat-content">
+          <div class="flowchat-header">
+            <div class="flowchat-avatar">
+              <img src="./icons/kate.png" alt="Chatbot avatar" />
             </div>
-
-            <!-- Typing Indicator -->
-            <div
-              class="ai-typing-indicator"
-              id="typingIndicator"
-              style="display: none"
-            >
-              <div class="ai-message bot-message">
-                <div class="ai-message-avatar">
-                  <div class="ai-avatar bot-avatar">
-                    <img src="./icons/kate.png" alt="ai icon" />
-                  </div>
-                </div>
-                <div class="ai-message-content">
-                  <div class="ai-typing-animation">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                  </div>
-                </div>
-              </div>
+            <div class="flowchat-contact">
+              <h3>Kate's Chatbot</h3>
             </div>
+            <span class="flowchat-status">online</span>
           </div>
 
-          <!-- Status Bar -->
-          <div class="ai-status-bar">
-            <div class="ai-status-item">
-              <span class="ai-status-indicator online"></span>
-              <span>AI Assistant: Online</span>
+          <div class="flowchat-body">
+            <div class="flowchat-messages" id="flowChatMessages"></div>
+            <div class="flowchat-typing" id="flowChatTyping" hidden>
+              <span></span>
+              <span></span>
+              <span></span>
             </div>
-            <div class="ai-status-item">
-              <span id="messageCount">Messages: 1</span>
-            </div>
+            <div class="flowchat-options" id="flowChatOptions"></div>
           </div>
 
-          <!-- Input Area -->
-          <div class="ai-input-area">
-            <div class="ai-input-container">
-              <input
-                type="text"
-                id="messageInput"
-                placeholder="Ask me about Katekani's skills, projects, or experience..."
-                maxlength="500"
-                autocomplete="off"
-              />
-              <button class="ai-send-button" id="sendButton">
-                <i class="fas fa-paper-plane"></i>
-              </button>
-            </div>
-            <div class="ai-input-info">
-              <span id="charCount">0/500</span>
-              <span class="ai-input-hint">Press Enter to send</span>
-            </div>
+          <div class="flowchat-footer">
+            <button class="flowchat-reset" id="flowChatReset">
+              <i class="fas fa-undo"></i>
+              Restart conversation
+            </button>
           </div>
         </div>
       </div>
@@ -1617,7 +1569,9 @@
     <script src="index.js"></script>
     <script src="weather-news.js"></script>
     <script src="contact.js"></script>
-    <script src="ai-chat.js"></script>
+    <!-- <script src="ai-chat.js"></script> -->
+    <script src="chatbot.js"></script>
+    <script src="flow-chat.js"></script>
     <script src="games.js"></script>
   </body>
 </html>
