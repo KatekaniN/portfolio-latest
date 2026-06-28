@@ -1,0 +1,332 @@
+<div
+        class="window"
+        id="projects"
+        style="top: 100px; left: 350px; width: 800px; height: 600px"
+      >
+        <div class="window-header">
+          <div class="window-title">
+            <i class="fas fa-code"></i> My Projects
+          </div>
+          <div class="window-controls">
+            <button
+              class="window-control minimize"
+              onclick="windowManager.minimizeWindow('projects')"
+              title="Minimize"
+            ></button>
+            <button
+              class="window-control maximize"
+              onclick="windowManager.maximizeWindow('projects')"
+              title="Maximize"
+            ></button>
+            <button
+              class="window-control close"
+              onclick="windowManager.closeWindow('projects')"
+              title="Close"
+            ></button>
+          </div>
+        </div>
+        <div class="window-content">
+          <h2>Featured Projects</h2>
+          <p>
+            Here are some of my recent projects that showcase my skills and
+            passion for development.
+          </p>
+
+          <div class="projects-grid">
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-desktop project-icon"></i>
+                <h3>Interactive Portfolio OS</h3>
+              </div>
+              <p>
+                A Windows 11-style interactive desktop built from scratch in
+                vanilla JavaScript. Features draggable, snapping windows, a live
+                light/dark theme engine, a built-in terminal, and a weather
+                widget powered by live API integration.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">HTML5/CSS3</span>
+                <span class="tech-tag">Responsive Design</span>
+                <span class="tech-tag">Node.js</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-wand-magic-sparkles"></i>
+                  <span>Why I built it</span>
+                </div>
+                <p>
+                  I wanted my portfolio to <em>be</em> a demo, not just describe
+                  one. So I built an entire desktop experience in vanilla
+                  JavaScript (no frameworks) with a theme engine, a
+                  working terminal, and live data. It&rsquo;s the clearest proof
+                  of how I think about interactive, responsive front-end work:
+                  you&rsquo;re using it right now.
+                </p>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://katekanin.github.io"
+                  class="project-link primary"
+                  target="_blank"
+                  ><i class="fas fa-external-link-alt"></i> Live Site</a
+                >
+                <a
+                  href="https://github.com/KatekaniN/portfolio-2025"
+                  class="project-link"
+                  target="_blank"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-shield-halved project-icon"></i>
+                <h3>Safe Spaces - FNB App of the Year Hackathon MVP</h3>
+              </div>
+              <p>
+                Interactive safety-mapping web app built in 48 hours that
+                displays verified safe zones for women and LGBTQ+ communities,
+                using Google Maps for geolocation, custom markers, and real-time
+                distance calculations. Backend built with Node.js and PostgreSQL
+                to store safe locations and user reports.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Google Maps</span>
+                <span class="tech-tag">PostgreSQL</span>
+                <span class="tech-tag">Node.js</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-key"></i>
+                  <span>Demo login</span>
+                </div>
+                <p>
+                  Use <strong>jacquelinenyamandi@gmail.com</strong> with password
+                  <strong>Jk990429</strong> to explore the live app. Built fast
+                  under hackathon pressure, with reusable map widgets, filters,
+                  and modal components teammates could embed across pages.
+                </p>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://safe-spaces-361fa.web.app"
+                  class="project-link primary"
+                  target="_blank"
+                  ><i class="fas fa-external-link-alt"></i> Live Demo</a
+                >
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-book project-icon"></i>
+                <h3>BookNiche</h3>
+              </div>
+              <p>
+                Responsive book discovery platform built with React and Next.js,
+                integrating caching and state management for efficient content
+                querying and fast page loads. Firebase handles authentication and
+                data persistence so users can bookmark and track personalised
+                reading lists.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">React.js</span>
+                <span class="tech-tag">Sass</span>
+                <span class="tech-tag">Zustand</span>
+                <span class="tech-tag">Firebase</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-layer-group"></i>
+                  <span>What I learned</span>
+                </div>
+                <p>
+                  Styling reusable UI components with Sass taught me to build a
+                  scalable component library that kept design consistent across
+                  the whole app while users tracked their reading.
+                </p>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://github.com/KatekaniN/BookNiche"
+                  class="project-link primary"
+                  target="_blank"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fab fa-github project-icon"></i>
+                <h3>GitHub API Consumer</h3>
+              </div>
+              <p>
+                Built a dynamic GitHub profile application consuming GitHub API
+                data with performance optimization requirements, implementing
+                Axios for HTTP requests with comprehensive error handling and
+                asynchronous programming patterns.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">Node.js</span>
+                <span class="tech-tag">Express</span>
+                <span class="tech-tag">Jasmine</span>
+                <span class="tech-tag">HTML/CSS</span>
+                <span class="tech-tag">Render</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-heart"></i>
+                  <span>What I'm proud of</span>
+                </div>
+                <p>
+                  This project taught me the beauty of asynchronous programming
+                  and proper error handling. I'm particularly proud of
+                  implementing a robust caching system that improved load times
+                  by 60%. It was my first time building a production-ready API
+                  consumer, and seeing real users interact with GitHub data
+                  through my interface was incredibly rewarding.
+                </p>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://consume-frontend.onrender.com/"
+                  class="project-link primary"
+                  target="_blank"
+                  ><i class="fas fa-external-link-alt"></i> Live Demo</a
+                >
+                <a
+                  href="https://github.com/KatekaniN/consume-frontend"
+                  class="project-link"
+                  target="_blank"
+                  ><i class="fab fa-github"></i> GitHub Frontend</a
+                >
+                <a
+                  href="https://github.com/KatekaniN/consume-backend"
+                  class="project-link"
+                  target="_blank"
+                  ><i class="fab fa-github"></i> GitHub Backend</a
+                >
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-leaf project-icon"></i>
+                <h3>Plantly - Plant Care Assistant</h3>
+              </div>
+              <p>
+                Self-taught React Native development to build a mobile plant
+                care application, integrating the PlantNet API for intelligent
+                plant identification and care advice.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">React Native</span>
+                <span class="tech-tag">PlantNet API</span>
+                <span class="tech-tag">Zustand</span>
+                <span class="tech-tag">TypeScript</span>
+                <span class="tech-tag">Expo</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-seedling"></i>
+                  <span>Learning journey</span>
+                </div>
+                <p>
+                  Teaching myself React Native while building this was like
+                  learning to swim by jumping in the deep end! The most
+                  fulfilling moment was when my friend successfully identified
+                  her sick tomato plant and saved it in time using the app. It
+                  showed me how technology can bridge generations and solve real
+                  problems that matter to people's daily lives.
+                </p>
+              </div>
+              <div class="project-links">
+                <a
+                  href="https://katekanin.github.io/plantly-website/"
+                  class="project-link primary"
+                  target="_blank"
+                  ><i class="fas fa-external-link-alt"></i> Demo</a
+                >
+                <a
+                  href="https://github.com/KatekaniN/plantly"
+                  class="project-link"
+                  target="_blank"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </div>
+            </div>
+
+            <!-- HACKATHON PROJECTS COMMENTED OUT
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-money-bill-wave project-icon"></i>
+                <h3>BizBacker (FNB Hackathon)</h3>
+              </div>
+              <p>
+                Led full-stack fintech solution addressing financial inclusion
+                in township economies. Developed innovative royalty-based
+                micro-investment model connecting investors with small
+                businesses.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">React</span>
+                <span class="tech-tag">Firebase</span>
+                <span class="tech-tag">Python</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-trophy"></i>
+                  <span>Impact & growth</span>
+                </div>
+                <p>Winning FNB App of the Year was surreal, but what really moved me was hearing township entrepreneurs say our solution could change their lives. Leading a team under pressure taught me that great code means nothing without understanding the human problem you're solving. This project opened my eyes to fintech's potential for social impact.</p>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link primary"
+                  ><i class="fas fa-award"></i> FNB App of the Year</a
+                >
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </div>
+            </div>
+
+            <div class="project-card">
+              <div class="project-header">
+                <i class="fas fa-shield-alt project-icon"></i>
+                <h3>Safe Spaces (Hackathon)</h3>
+              </div>
+              <p>
+                Led frontend development of real-time safety network, creating
+                community-driven safety platform for vulnerable populations
+                using JavaScript and Mapbox integration.
+              </p>
+              <div class="tech-stack">
+                <span class="tech-tag">JavaScript</span>
+                <span class="tech-tag">Mapbox</span>
+                <span class="tech-tag">HTML/CSS</span>
+              </div>
+              <div class="project-reflection">
+                <div class="reflection-header">
+                  <i class="fas fa-users"></i>
+                  <span>Personal mission</span>
+                </div>
+                <p>Building this safety platform felt deeply personal - creating technology that could potentially save lives carried enormous responsibility. I learned that frontend development isn't just about pretty interfaces; it's about creating intuitive experiences when people are vulnerable and need help quickly. Every optimization meant someone could get help faster.</p>
+              </div>
+              <div class="project-links">
+                <a href="#" class="project-link primary"
+                  ><i class="fas fa-external-link-alt"></i> Project Info</a
+                >
+                <a href="#" class="project-link"
+                  ><i class="fab fa-github"></i> GitHub</a
+                >
+              </div>
+            </div>
+            END HACKATHON PROJECTS -->
+          </div>
+        </div>
+      </div>

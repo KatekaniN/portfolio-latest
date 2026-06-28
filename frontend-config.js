@@ -7,17 +7,13 @@ const API_CONFIG = {
 
   // Base URL for API calls
   get baseURL() {
-    if (this.isDevelopment) {
-      return "http://localhost:3000";
-    } else {
-      // In production, use the same domain as the current page
-      return window.location.origin;
-    }
+    // The API is served from the same origin as the page, so use it directly.
+    // This works in development on any port and in production.
+    return window.location.origin;
   },
 
   // API endpoints
   endpoints: {
-    chat: "/api/chat",
     weather: "/api/weather",
     news: "/api/news",
     contact: "/api/contact",

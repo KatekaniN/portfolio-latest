@@ -1,0 +1,393 @@
+/* Responsive Design for Windows 11 */
+@media (max-width: 768px) {
+  .desktop-icon {
+    width: 76px;
+    height: 88px;
+  }
+
+  .icon-image {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .window {
+    min-width: 95vw !important;
+    min-height: 85vh !important;
+    top: 5vh !important;
+    left: 2.5vw !important;
+    width: 95vw !important;
+    height: 85vh !important;
+    border-radius: 0px !important;
+  }
+
+  #window.active.focused {
+    border-radius: 0px !important ;
+  }
+
+  .window-content {
+    padding: 16px;
+  }
+
+  .profile-section {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .projects-grid,
+  .personal-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .taskbar {
+    height: 48px;
+  }
+
+  .taskbar-center {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .taskbar-time {
+    position: static;
+    margin-left: auto;
+  }
+}
+
+@media (max-width: 480px) {
+  .desktop-icon {
+    width: 68px;
+    height: 80px;
+  }
+
+  .icon-image {
+    width: 44px;
+    height: 44px;
+    font-size: 22px;
+  }
+
+  .window-header {
+    padding: 12px 16px;
+  }
+
+  .window-content {
+    padding: 12px;
+  }
+}
+
+/* Dark mode is driven by the [data-theme] tokens, not OS preference,
+   so window chrome stays in sync with the in-app theme toggle. */
+
+/* Responsive Design - About Me Section */
+
+/* Large tablets and small desktops */
+@media screen and (max-width: 1200px) {
+  .profile-section {
+    grid-template-columns: 280px 1fr;
+    gap: 28px;
+    padding: 28px;
+  }
+
+  .profile-pic {
+    width: 240px;
+    height: 240px;
+  }
+
+  .profile-info h2 {
+    font-size: 28px;
+  }
+}
+
+/* Tablets */
+@media screen and (max-width: 900px) {
+  .profile-section {
+    grid-template-columns: 1fr;
+    gap: 24px;
+    padding: 24px;
+    text-align: left; /* Changed from center to left */
+  }
+
+  .profile-image {
+    order: 1;
+    align-items: flex-start; /* Align profile image to left */
+  }
+
+  .profile-info {
+    order: 2;
+    align-items: flex-start; /* Align text content to left */
+  }
+
+  .profile-pic {
+    width: 200px;
+    height: 200px;
+  }
+
+  .profile-info h2 {
+    font-size: 26px;
+    text-align: left;
+  }
+
+  .tagline {
+    margin: 0 0 16px 0 !important; /* Left aligned instead of center */
+  }
+
+  .slogan {
+    text-align: left; /* Left aligned instead of center */
+    margin: 0 0 24px 0 !important;
+  }
+
+  .about-details {
+    max-width: 100%; /* Remove max-width constraint */
+    margin: 8px 0 0 0; /* Remove auto centering */
+  }
+}
+
+/* Small tablets and large phones */
+@media screen and (max-width: 768px) {
+  .profile-section {
+    padding: 20px;
+    margin-bottom: 24px;
+    border-radius: 12px;
+  }
+
+  .profile-pic {
+    width: 180px;
+    height: 180px;
+    border-width: 3px;
+  }
+
+  .profile-info h2 {
+    font-size: 24px;
+    line-height: 1.2;
+  }
+
+  .tagline {
+    font-size: 16px;
+    padding: 6px 12px;
+  }
+
+  .slogan {
+    font-size: 15px;
+    line-height: 1.4;
+  }
+
+  .detail-item {
+    padding: 16px;
+    gap: 12px;
+  }
+
+  .detail-item i {
+    width: 20px;
+    height: 20px;
+    font-size: 16px;
+  }
+
+  .detail-item span {
+    font-size: 14px;
+  }
+}
+
+/* Mobile phones */
+@media screen and (max-width: 480px) {
+  .profile-section {
+    padding: 16px;
+    gap: 20px;
+  }
+
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+  }
+
+  .profile-info h2 {
+    font-size: 22px;
+  }
+
+  .tagline {
+    font-size: 15px;
+    padding: 5px 10px;
+    border-radius: 20px;
+  }
+
+  .slogan {
+    font-size: 14px;
+    max-width: 100%;
+  }
+
+  .detail-item {
+    padding: 14px;
+    gap: 10px;
+    border-radius: 10px;
+  }
+
+  .detail-item:hover {
+    transform: translateX(4px) translateY(-1px);
+  }
+
+  .detail-item i {
+    width: 18px;
+    height: 18px;
+    font-size: 14px;
+    border-radius: 6px;
+  }
+
+  .detail-item span {
+    font-size: 13px;
+    line-height: 1.3;
+  }
+}
+
+/* Small mobile phones */
+@media screen and (max-width: 375px) {
+  .profile-section {
+    padding: 14px;
+    gap: 16px;
+  }
+
+  .profile-pic {
+    width: 130px;
+    height: 130px;
+  }
+
+  .profile-info h2 {
+    font-size: 20px;
+  }
+
+  .tagline {
+    font-size: 14px;
+  }
+
+  .slogan {
+    font-size: 13px;
+  }
+
+  .detail-item {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .detail-item span {
+    font-size: 12px;
+  }
+}
+
+/* Dark mode support using CSS custom properties and system preference */
+@media (prefers-color-scheme: dark) {
+  .profile-section {
+    background: rgba(32, 32, 32, 0.95); /* Windows 11 dark background */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.2),
+      0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+
+  .profile-section::before {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 120, 212, 0.03) 0%,
+      rgba(99, 102, 241, 0.03) 50%,
+      rgba(139, 92, 246, 0.03) 100%
+    );
+  }
+
+  .profile-pic {
+    border: 3px solid rgba(255, 255, 255, 0.1);
+    box-shadow:
+      0 16px 64px rgba(0, 0, 0, 0.4),
+      0 8px 32px rgba(0, 0, 0, 0.3),
+      0 4px 16px rgba(0, 0, 0, 0.2);
+    background: rgba(45, 45, 45, 0.8);
+  }
+
+  .profile-pic:hover {
+    border-color: rgba(255, 255, 255, 0.15);
+    box-shadow:
+      0 20px 80px rgba(0, 0, 0, 0.5),
+      0 12px 40px rgba(0, 0, 0, 0.4),
+      0 6px 20px rgba(0, 0, 0, 0.3);
+  }
+
+  .profile-info h2 {
+    color: #ffffff; /* Windows 11 dark mode text primary */
+  }
+
+  .tagline {
+    background: rgba(0, 120, 212, 0.12);
+    border: 1px solid rgba(0, 120, 212, 0.2);
+    color: #60cdff !important; /* Windows 11 accent blue dark mode */
+  }
+
+  .slogan {
+    color: #c8c6c4 !important; /* Windows 11 dark mode text secondary */
+  }
+
+  .detail-item {
+    background: rgba(45, 45, 45, 0.8); /* Windows 11 dark card background */
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    box-shadow:
+      0 2px 8px rgba(0, 0, 0, 0.2),
+      0 1px 4px rgba(0, 0, 0, 0.1);
+  }
+
+  .detail-item:hover {
+    background: rgba(55, 55, 55, 0.9);
+    box-shadow:
+      0 6px 24px rgba(0, 0, 0, 0.3),
+      0 3px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(0, 120, 212, 0.2);
+  }
+
+  .detail-item::before {
+    background: #60cdff; /* Windows 11 accent blue dark mode */
+  }
+
+  .detail-item i {
+    background: rgba(96, 205, 255, 0.12);
+    color: #60cdff;
+  }
+
+  .detail-item span {
+    color: #ffffff; /* Windows 11 dark mode text primary */
+  }
+
+  .detail-item strong {
+    color: #ffffff; /* Windows 11 dark mode text high emphasis */
+  }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+  .profile-section {
+    border: 2px solid;
+    backdrop-filter: none;
+  }
+
+  .detail-item {
+    border: 2px solid;
+    backdrop-filter: none;
+  }
+
+  .detail-item i {
+    background: transparent;
+    border: 1px solid;
+  }
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  .profile-pic,
+  .detail-item,
+  .detail-item::before {
+    transition: none;
+  }
+
+  .detail-item:hover {
+    transform: none;
+  }
+
+  .profile-pic:hover {
+    transform: none;
+  }
+}
+

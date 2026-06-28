@@ -1,0 +1,193 @@
+<div
+        class="window"
+        id="contact"
+        style="
+          top: 140px;
+          left: 450px;
+          width: 720px;
+          height: 500px;
+          border-radius: 0px !important;
+        "
+      >
+        <div class="window-header">
+          <div class="window-title">
+            <i class="fas fa-envelope"></i> Contact Me
+          </div>
+          <div class="window-controls">
+            <button
+              class="window-control minimize"
+              onclick="windowManager.minimizeWindow('contact')"
+              title="Minimize"
+            ></button>
+            <button
+              class="window-control maximize"
+              onclick="windowManager.maximizeWindow('contact')"
+              title="Maximize"
+            ></button>
+            <button
+              class="window-control close"
+              onclick="windowManager.closeWindow('contact')"
+              title="Close"
+            ></button>
+          </div>
+        </div>
+        <div class="window-content">
+          <h2>Let's Connect!</h2>
+          <p>
+            I'm always excited to discuss new opportunities, collaborate on
+            interesting projects, or just chat about technology and innovation.
+            Feel free to reach out through any of these channels!
+          </p>
+
+          <div class="unified-contact-form">
+            <div class="contact-header">
+              <h3>Get In Touch</h3>
+              <p>
+                Ready to collaborate? Let's connect through your preferred
+                method!
+              </p>
+            </div>
+
+            <!-- Contact Methods Section -->
+            <div class="contact-methods-grid">
+              <div class="contact-method">
+                <i class="fas fa-envelope"></i>
+                <div>
+                  <strong>Email</strong>
+                  <a href="mailto:knyamandi99@gmail.com"
+                    >knyamandi99@gmail.com</a
+                  >
+                </div>
+              </div>
+              <div class="contact-method">
+                <i class="fas fa-calendar-alt"></i>
+                <div>
+                  <strong>Book a Quick Chat</strong>
+                  <a
+                    href="https://calendar.app.google/LnkWXbra3MUtCyQM9"
+                    target="_blank"
+                    class="booking-link"
+                    >Schedule a Meeting</a
+                  >
+                </div>
+              </div>
+              <div class="contact-method">
+                <i class="fab fa-linkedin"></i>
+                <div>
+                  <strong>LinkedIn</strong>
+                  <a href="https://linkedin.com/in/katekanin" target="_blank"
+                    >linkedin.com/in/katekanin</a
+                  >
+                </div>
+              </div>
+              <div class="contact-method">
+                <i class="fab fa-github"></i>
+                <div>
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/katekanin" target="_blank"
+                    >github.com/katekanin</a
+                  >
+                </div>
+              </div>
+            </div>
+
+            <!-- Divider -->
+            <div class="contact-divider">
+              <span>or send me a message right here</span>
+            </div>
+
+            <!-- Message Form Section -->
+            <div class="message-form-section">
+              <div class="success-message" id="successMessage">
+                <i class="fas fa-check-circle"></i>
+                Thank you! Your message has been sent successfully.
+              </div>
+
+              <div class="error-message" id="errorMessage">
+                <i class="fas fa-exclamation-triangle"></i>
+                <span id="errorText"
+                  >Something went wrong. Please try again.</span
+                >
+              </div>
+
+              <form id="contactForm">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label class="form-label" for="name">First Name *</label>
+                    <input
+                      type="text"
+                      id="name"
+                      name="name"
+                      class="form-input"
+                      autocapitalize="words"
+                      autocomplete="name"
+                      placeholder="Your preferred name"
+                      required
+                    />
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" for="email"
+                      >Email Address *</label
+                    >
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      class="form-input"
+                      autocomplete="email"
+                      placeholder="your.email@example.com"
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="subject">Subject *</label>
+                  <input
+                    type="text"
+                    id="subject"
+                    name="subject"
+                    required
+                    class="form-input"
+                    autocapitalize="words"
+                    placeholder="What would you like to discuss?"
+                  />
+                </div>
+
+                <div class="form-group">
+                  <label class="form-label" for="message">Message *</label>
+                  <textarea
+                    id="message"
+                    name="message"
+                    class="form-textarea"
+                    autocapitalize="sentences"
+                    required
+                    placeholder="Tell me about your project, collaboration idea, or just say hello!"
+                  ></textarea>
+                </div>
+
+                <button type="submit" class="form-submit-btn" id="submitButton">
+                  <span id="buttonText">Send Message</span>
+                  <i class="fas fa-paper-plane" id="buttonIcon"></i>
+                  <div
+                    class="loading-spinner"
+                    id="loadingSpinner"
+                    style="display: none"
+                  ></div>
+                </button>
+              </form>
+            </div>
+          </div>
+
+          <div class="availability">
+            <p>
+              <strong>Current Status:</strong>
+              <span class="status-available"
+                ><i class="fas fa-circle" style="color: #28a745"></i> Available
+                for new opportunities</span
+              >
+            </p>
+            <p><em>Response time: Usually within 24 hours</em></p>
+          </div>
+        </div>
+      </div>

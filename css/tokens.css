@@ -1,0 +1,101 @@
+/* Design tokens — single source of truth for color, spacing, type, elevation.
+ * Foundation layer (loads first). Theme-able via [data-theme="dark"].
+ * Shell chrome migration to these tokens is owned by the visual overhaul phase. */
+
+:root {
+  /* Surfaces */
+  --bg: #f3f3f3;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f5f5f5;
+  --surface-3: #ebebeb;
+
+  /* Text */
+  --text: #1b1b1b;
+  --text-muted: #5f5f5f;
+  --text-subtle: #8a8a8a;
+
+  /* Lines */
+  --border: rgba(0, 0, 0, 0.1);
+  --border-strong: rgba(0, 0, 0, 0.18);
+
+  /* Interaction */
+  --hover: rgba(0, 0, 0, 0.06);
+  --hover-strong: rgba(0, 0, 0, 0.1);
+  --focus-ring: #0078d4;
+
+  /* Chrome (taskbar, window header glass) */
+  --chrome-bg: rgba(243, 243, 243, 0.8);
+  --chrome-text: #1b1b1b;
+  --chrome-border: rgba(0, 0, 0, 0.08);
+  --chrome-hover: rgba(0, 0, 0, 0.06);
+  --chrome-hover-strong: rgba(0, 0, 0, 0.1);
+
+  /* Accent */
+  --accent: #0078d4;
+  --accent-hover: #106ebe;
+  --accent-active: #005a9e;
+  --accent-contrast: #ffffff;
+
+  /* Status */
+  --success: #16a34a;
+  --warning: #d97706;
+  --danger: #dc2626;
+
+  /* Radius */
+  --radius-sm: 4px;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --radius-pill: 999px;
+
+  /* Elevation */
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.08), 0 1px 3px rgba(0, 0, 0, 0.06);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.14);
+  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.22);
+
+  /* Type */
+  --font-ui:
+    "Segoe UI Variable", "Segoe UI", system-ui, -apple-system,
+    BlinkMacSystemFont, sans-serif;
+  --font-mono:
+    "Cascadia Code", "Cascadia Mono", "Consolas", "SFMono-Regular", ui-monospace,
+    monospace;
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --speed: 0.2s;
+}
+
+[data-theme="dark"] {
+  --bg: #1e1e1e;
+  --bg-elevated: #2a2a2a;
+  --surface: #2a2a2a;
+  --surface-2: #323232;
+  --surface-3: #3a3a3a;
+
+  --text: #f3f3f3;
+  --text-muted: #b8b8b8;
+  --text-subtle: #8a8a8a;
+
+  --border: rgba(255, 255, 255, 0.1);
+  --border-strong: rgba(255, 255, 255, 0.18);
+
+  --hover: rgba(255, 255, 255, 0.08);
+  --hover-strong: rgba(255, 255, 255, 0.14);
+  --focus-ring: #4cc2ff;
+
+  --chrome-bg: rgba(32, 32, 32, 0.85);
+  --chrome-text: #f3f3f3;
+  --chrome-border: rgba(255, 255, 255, 0.1);
+  --chrome-hover: rgba(255, 255, 255, 0.08);
+  --chrome-hover-strong: rgba(255, 255, 255, 0.16);
+
+  --accent: #4cc2ff;
+  --accent-hover: #62cbff;
+  --accent-active: #2fb3ff;
+  --accent-contrast: #06324f;
+
+  --shadow-1: 0 1px 2px rgba(0, 0, 0, 0.4), 0 1px 3px rgba(0, 0, 0, 0.3);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.6);
+}

@@ -1,0 +1,146 @@
+/* Windows 11 About Me Animations and Enhancements */
+
+/* Smooth entrance animation for profile section */
+@keyframes profileSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Profile picture floating animation */
+@keyframes profileFloat {
+  0%,
+  100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+/* Detail items staggered entrance */
+@keyframes detailSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Apply animations */
+.profile-section {
+  animation: profileSlideIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.profile-pic {
+  animation: profileFloat 6s ease-in-out infinite;
+}
+
+.detail-item {
+  animation: detailSlideIn 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Staggered animation delays for detail items */
+.detail-item:nth-child(1) {
+  animation-delay: 0.1s;
+}
+.detail-item:nth-child(2) {
+  animation-delay: 0.2s;
+}
+.detail-item:nth-child(3) {
+  animation-delay: 0.3s;
+}
+.detail-item:nth-child(4) {
+  animation-delay: 0.4s;
+}
+.detail-item:nth-child(5) {
+  animation-delay: 0.5s;
+}
+
+/* Windows 11-style focus indicators */
+.detail-item:focus {
+  outline: 2px solid #0078d4;
+  outline-offset: 2px;
+}
+
+/* Enhanced hover effects with Windows 11 Fluent Design */
+.profile-info h2:hover {
+  background: linear-gradient(135deg, #0078d4 0%, #6366f1 50%, #8b5cf6 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  transition: all 0.3s ease;
+}
+
+/* Glassmorphism effect enhancement */
+.profile-section:hover {
+  background: rgba(248, 248, 248, 0.98); /* Slightly brighter on hover */
+  box-shadow:
+    0 12px 48px rgba(0, 0, 0, 0.08),
+    0 6px 24px rgba(0, 0, 0, 0.04),
+    0 3px 12px rgba(0, 0, 0, 0.02);
+  border-color: rgba(0, 120, 212, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Dark mode hover enhancement */
+@media (prefers-color-scheme: dark) {
+  .profile-section:hover {
+    background: rgba(40, 40, 40, 0.98);
+    box-shadow:
+      0 12px 48px rgba(0, 0, 0, 0.5),
+      0 6px 24px rgba(0, 0, 0, 0.3),
+      0 3px 12px rgba(0, 0, 0, 0.2);
+    border-color: rgba(96, 205, 255, 0.12);
+  }
+
+  .profile-info h2:hover {
+    color: #60cdff; /* Windows 11 accent blue on hover */
+    transition: color 0.3s ease;
+  }
+}
+
+/* Windows 11-style selection highlighting */
+.profile-info h2::selection,
+.tagline::selection,
+.slogan::selection,
+.detail-item span::selection {
+  background: rgba(0, 120, 212, 0.3);
+  color: inherit;
+}
+
+/* Accessibility improvements */
+.profile-section:focus-within {
+  outline: 2px solid #0078d4;
+  outline-offset: 4px;
+  outline-style: dashed;
+}
+
+/* Print styles for About Me */
+@media print {
+  .profile-section {
+    background: white !important;
+    box-shadow: none !important;
+    border: 1px solid #ccc !important;
+    backdrop-filter: none !important;
+    break-inside: avoid;
+  }
+
+  .detail-item {
+    background: #f8f9fa !important;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+
+  .profile-pic {
+    box-shadow: none !important;
+  }
+}

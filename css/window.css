@@ -1,0 +1,231 @@
+/* Windows 11 Window Styles */
+.window {
+  position: absolute;
+  background: var(--bg-elevated);
+  backdrop-filter: blur(40px);
+  border-radius: 0px;
+  box-shadow: var(--shadow-3);
+  min-width: 400px;
+  min-height: 300px;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.8);
+  overflow: hidden;
+  resize: both;
+  border: 1px solid var(--border);
+  transition:
+    opacity 0.3s ease,
+    transform 0.3s ease;
+}
+
+.window.active {
+  opacity: 1;
+  pointer-events: auto;
+  transform: scale(1);
+}
+
+.window.opening {
+  animation: windowOpen 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+@keyframes windowOpen {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+.window.maximized {
+  border-radius: 0 !important;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.1) !important;
+}
+
+.window.active.focused {
+  box-shadow:
+    0 32px 64px rgba(0, 120, 212, 0.2),
+    0 16px 32px rgba(0, 0, 0, 0.1),
+    0 0 0 2px rgba(0, 120, 212, 0.2);
+}
+
+.window-content p {
+  color: var(--text-muted); /* Darker than current #6b7280 for better contrast */
+}
+
+/* Ensure focus states are visible for keyboard navigation */
+a:focus,
+button:focus,
+input:focus {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.window.dragging {
+  box-shadow:
+    0 40px 80px rgba(0, 0, 0, 0.3),
+    0 20px 40px rgba(0, 0, 0, 0.2);
+  transform: scale(1.02);
+}
+
+/* Windows 11 Window Header */
+.window-header {
+  background: var(--surface-2);
+  backdrop-filter: blur(20px);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  cursor: move;
+  border-bottom: 1px solid var(--border);
+  height: 48px;
+}
+
+.window-controls {
+  display: flex;
+  gap: 0; /* No gap for Windows 11 style */
+  align-items: center;
+  margin-left: auto; /* This pushes the controls to the right */
+  order: 3; /* Ensure controls are always last */
+}
+
+.window-title {
+  order: 1; /* Title comes first */
+  flex: 1; /* Take up available space */
+}
+
+.window-control {
+  width: 46px; /* Windows 11 standard width */
+  height: 32px; /* Windows 11 standard height */
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.15s ease !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  color: var(--text);
+  font-family: "Segoe UI", sans-serif;
+  font-weight: normal;
+}
+
+/* Windows 11 hover effects */
+.window-control:hover {
+  background-color: var(--hover) !important;
+}
+
+.window-control.minimize:hover {
+  background-color: var(--hover) !important;
+}
+
+.window-control.maximize:hover {
+  background-color: var(--hover) !important;
+}
+
+.window-control.close:hover {
+  background-color: #c42b1c !important;
+  color: white;
+}
+
+/* Windows 11 active states */
+.window-control:active {
+  background-color: var(--hover-strong);
+}
+
+.window-control.close:active {
+  background-color: #a23327 !important;
+  color: white;
+}
+
+/* Windows 11 symbols */
+.window-control.minimize::before {
+  content: "\2015";
+  font-size: 12px;
+  line-height: 1;
+}
+
+.window-control.maximize::before {
+  content: "";
+  font-size: 10px;
+  line-height: 1;
+}
+
+.window-control.close::before {
+  content: "\00D7";
+  font-size: 14px;
+  line-height: 1;
+}
+
+.window-title {
+  font-weight: 600;
+  color: var(--text);
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: -0.01em;
+}
+
+.window-title i {
+  color: var(--text-muted);
+  font-size: 16px;
+}
+
+/* Windows 11 Window Content */
+.window-content {
+  padding: 24px;
+  height: calc(100% - 48px);
+  overflow-y: auto;
+  line-height: 1.6;
+  background: var(--surface);
+  backdrop-filter: blur(20px);
+}
+
+.window-content h2 {
+  color: var(--text);
+  margin-bottom: 16px;
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.window-content h3 {
+  color: var(--text);
+  margin-bottom: 12px;
+  font-size: 18px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.window-content p {
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* Windows 11 Cards */
+.content-card,
+.project-card,
+.personal-item {
+  background: var(--surface-2);
+  backdrop-filter: blur(20px);
+  padding: 20px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-1);
+  transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.content-card:hover,
+.project-card:hover,
+.personal-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-2);
+  background: var(--surface-3);
+  border: 1px solid var(--accent);
+}
+

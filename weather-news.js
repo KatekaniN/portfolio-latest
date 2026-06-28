@@ -50,7 +50,7 @@ class WeatherNewsWidget {
       left: 1em;
       top: 50%;
       transform: translateY(-50%);
-      color: white;
+      color: var(--chrome-text);
       font-size: 12px;
       display: flex;
       align-items: center;
@@ -264,7 +264,7 @@ class WeatherNewsWidget {
         ">
           <i class="fas fa-cloud" style="color: #9ca3af; font-size: 10px;"></i>
         </div>
-        <span style="color: rgba(255, 255, 255, 0.7);">Weather unavailable</span>
+        <span style="color: var(--chrome-text, rgba(255, 255, 255, 0.7));">Weather unavailable</span>
       `;
       return;
     }
@@ -357,11 +357,11 @@ class WeatherNewsWidget {
     left: 20px;
     width: 680px;
     height: 520px;
-    background: linear-gradient(135deg, rgba(28, 32, 38, 0.95) 0%, rgba(20, 24, 28, 0.98) 100%);
+    background: var(--surface);
     backdrop-filter: blur(30px) saturate(150%);
-    color: #ffffff;
+    color: var(--text);
     border-radius: 12px;
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    border: 1px solid var(--border);
     z-index: 10000;
     animation: fadeInUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     overflow: hidden;
@@ -379,9 +379,9 @@ class WeatherNewsWidget {
         z-index: 100;
     ">
         <button onclick="this.parentElement.parentElement.remove()" style="
-            background: rgba(255, 255, 255, 0.08);
+            background: var(--hover);
             border: none;
-            color: rgba(255, 255, 255, 0.6);
+            color: var(--text-muted);
             width: 28px;
             height: 28px;
             border-radius: 6px;
@@ -408,7 +408,7 @@ class WeatherNewsWidget {
             display: flex;
             gap: 20px;
             padding-bottom: 20px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            border-bottom: 1px solid var(--border);
         ">
             <!-- Left: Current Weather -->
             <div style="
@@ -430,13 +430,13 @@ class WeatherNewsWidget {
                     ">
                         <i class="fas fa-spinner fa-spin" style="color: #60a5fa; font-size: 24px;"></i>
                     </div>
-                    <div style="font-size: 32px; font-weight: 300; margin-bottom: 4px; color: #ffffff;">
+                    <div style="font-size: 32px; font-weight: 300; margin-bottom: 4px; color: var(--text);">
                         --°C
                     </div>
-                    <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 2px;">
+                    <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 2px;">
                         Loading...
                     </div>
-                    <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+                    <div style="font-size: 12px; color: var(--text-subtle);">
                         Johannesburg
                     </div>
                 </div>
@@ -451,58 +451,58 @@ class WeatherNewsWidget {
                 align-content: start;
             ">
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">FEELS LIKE</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">--°C</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">FEELS LIKE</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">--°C</div>
                 </div>
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">HUMIDITY</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">--%</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">HUMIDITY</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">--%</div>
                 </div>
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">WIND</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">-- km/h</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">WIND</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">-- km/h</div>
                 </div>
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">VISIBILITY</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">-- km</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">VISIBILITY</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">-- km</div>
                 </div>
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">UV INDEX</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">-</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">UV INDEX</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">-</div>
                 </div>
                 <div style="
-                    background: rgba(255, 255, 255, 0.03);
+                    background: var(--surface-2);
                     border-radius: 8px;
                     padding: 12px;
                     text-align: center;
                 ">
-                    <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">PRESSURE</div>
-                    <div style="font-size: 16px; font-weight: 600; color: #ffffff;">---- mb</div>
+                    <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">PRESSURE</div>
+                    <div style="font-size: 16px; font-weight: 600; color: var(--text);">---- mb</div>
                 </div>
             </div>
         </div>
@@ -532,8 +532,8 @@ class WeatherNewsWidget {
                 ">
                     <i class="fas fa-newspaper" style="color: white; font-size: 9px;"></i>
                 </div>
-                <span style="font-weight: 600; font-size: 15px; color: #ffffff;">Latest News</span>
-                <span style="font-size: 11px; color: rgba(255, 255, 255, 0.4); margin-left: auto;" id="newsUpdateTime">Updated now</span>
+                <span style="font-weight: 600; font-size: 15px; color: var(--text);">Latest News</span>
+                <span style="font-size: 11px; color: var(--text-subtle); margin-left: auto;" id="newsUpdateTime">Updated now</span>
             </div>
             
             <!-- News Content -->
@@ -563,7 +563,7 @@ class WeatherNewsWidget {
                     ">
                         <i class="fas fa-spinner fa-spin" style="color: #60a5fa; font-size: 16px;"></i>
                     </div>
-                    <div style="font-size: 13px; font-weight: 500; color: rgba(255, 255, 255, 0.8);">
+                    <div style="font-size: 13px; font-weight: 500; color: var(--text-muted);">
                         Loading latest news...
                     </div>
                 </div>
@@ -593,13 +593,71 @@ class WeatherNewsWidget {
   async loadPopupContent() {
     try {
       const weatherData = await this.fetchWeatherData();
+      if (!weatherData) {
+        this.renderWeatherUnavailable();
+        return;
+      }
       this.updateComprehensiveWeatherDisplay(weatherData);
 
-      const newsData = await this.fetchNewsData();
-      this.updateNewsContainer(newsData);
+      try {
+        const newsData = await this.fetchNewsData();
+        this.updateNewsContainer(newsData);
+      } catch (newsError) {
+        console.log("News unavailable:", newsError);
+      }
     } catch (error) {
       console.error("Error loading popup content:", error);
+      this.renderWeatherUnavailable();
     }
+  }
+
+  // Replace the popup with a clean, theme-aware "Weather unavailable" card
+  renderWeatherUnavailable() {
+    if (!this.newsPopup) return;
+    this.newsPopup.style.width = "360px";
+    this.newsPopup.style.height = "auto";
+    this.newsPopup.style.background = "var(--surface, #1c2026)";
+    this.newsPopup.style.color = "var(--text, #ffffff)";
+    this.newsPopup.style.border = "1px solid var(--border, rgba(255, 255, 255, 0.08))";
+    this.newsPopup.style.boxShadow = "var(--shadow-3, 0 16px 40px rgba(0, 0, 0, 0.35))";
+    this.newsPopup.innerHTML = `
+      <div style="position: relative; padding: 36px 28px 32px; text-align: center;">
+        <button onclick="this.closest('.weather-details-popup').remove()" style="
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: var(--hover, rgba(255, 255, 255, 0.08));
+            border: none;
+            color: var(--text-muted, rgba(255, 255, 255, 0.6));
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: background 0.2s ease;
+        " onmouseover="this.style.background='var(--hover-strong, rgba(255,255,255,0.14))'" onmouseout="this.style.background='var(--hover, rgba(255,255,255,0.08))'">
+            <i class="fas fa-times" style="font-size: 11px;"></i>
+        </button>
+        <div style="
+            width: 64px;
+            height: 64px;
+            margin: 0 auto 16px;
+            border-radius: 16px;
+            background: var(--surface-2, rgba(255, 255, 255, 0.06));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        ">
+            <i class="fas fa-cloud" style="font-size: 26px; color: var(--text-muted, #9ca3af);"></i>
+        </div>
+        <div style="font-size: 18px; font-weight: 600; margin-bottom: 8px;">Weather unavailable</div>
+        <div style="font-size: 13px; line-height: 1.5; color: var(--text-muted, rgba(255, 255, 255, 0.6)); max-width: 264px; margin: 0 auto;">
+            Live weather data can&rsquo;t be loaded right now. The weather service isn&rsquo;t configured on this server.
+        </div>
+      </div>
+    `;
   }
 
   updateComprehensiveWeatherDisplay(data) {
@@ -627,13 +685,13 @@ class WeatherNewsWidget {
         ">
             <i class="${icon.class}" style="color: ${icon.color}; font-size: 24px;"></i>
         </div>
-        <div style="font-size: 32px; font-weight: 300; margin-bottom: 4px; color: #ffffff;">
+        <div style="font-size: 32px; font-weight: 300; margin-bottom: 4px; color: var(--text);">
             ${temp}°C
         </div>
-        <div style="font-size: 14px; color: rgba(255, 255, 255, 0.7); margin-bottom: 2px;">
+        <div style="font-size: 14px; color: var(--text-muted); margin-bottom: 2px;">
             ${condition}
         </div>
-        <div style="font-size: 12px; color: rgba(255, 255, 255, 0.5);">
+        <div style="font-size: 12px; color: var(--text-subtle);">
             ${location.name}
         </div>
     `;
@@ -641,58 +699,58 @@ class WeatherNewsWidget {
     // Update details grid
     detailsGrid.innerHTML = `
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">FEELS LIKE</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${Math.round(current.feelslike_c)}°C</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">FEELS LIKE</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${Math.round(current.feelslike_c)}°C</div>
         </div>
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">HUMIDITY</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${current.humidity}%</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">HUMIDITY</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${current.humidity}%</div>
         </div>
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">WIND</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${Math.round(current.wind_kph)} km/h</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">WIND</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${Math.round(current.wind_kph)} km/h</div>
         </div>
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">VISIBILITY</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${Math.round(current.vis_km)} km</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">VISIBILITY</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${Math.round(current.vis_km)} km</div>
         </div>
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">UV INDEX</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${current.uv || 0}</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">UV INDEX</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${current.uv || 0}</div>
         </div>
         <div style="
-            background: rgba(255, 255, 255, 0.03);
+            background: var(--surface-2);
             border-radius: 8px;
             padding: 12px;
             text-align: center;
         ">
-            <div style="font-size: 10px; color: rgba(255, 255, 255, 0.5); margin-bottom: 4px; text-transform: uppercase;">PRESSURE</div>
-            <div style="font-size: 16px; font-weight: 600; color: #ffffff;">${Math.round(current.pressure_mb)} mb</div>
+            <div style="font-size: 10px; color: var(--text-subtle); margin-bottom: 4px; text-transform: uppercase;">PRESSURE</div>
+            <div style="font-size: 16px; font-weight: 600; color: var(--text);">${Math.round(current.pressure_mb)} mb</div>
         </div>
     `;
   }
@@ -728,10 +786,10 @@ class WeatherNewsWidget {
           ">
               <i class="fas fa-newspaper" style="color: #f87171; font-size: 18px;"></i>
           </div>
-          <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px; color: #ffffff;">
+          <div style="font-size: 14px; font-weight: 500; margin-bottom: 8px; color: var(--text);">
               No news available
           </div>
-          <div style="font-size: 12px; color: rgba(255, 255, 255, 0.6);">
+          <div style="font-size: 12px; color: var(--text-muted);">
               Please check your connection and try again
           </div>
       </div>
@@ -750,7 +808,7 @@ class WeatherNewsWidget {
 
         return `
       <div class="news-article" style="
-          background: rgba(255, 255, 255, 0.02);
+          background: var(--surface-2);
           border-radius: 8px;
           padding: 12px;
           cursor: pointer;
@@ -790,7 +848,7 @@ class WeatherNewsWidget {
                   line-height: 1.3; 
                   margin-bottom: 6px; 
                   font-weight: 500;
-                  color: #ffffff;
+                  color: var(--text);
                   display: -webkit-box;
                   -webkit-line-clamp: 2;
                   -webkit-box-orient: vertical;
@@ -805,7 +863,7 @@ class WeatherNewsWidget {
                   align-items: center;
                   gap: 8px;
                   font-size: 11px; 
-                  color: rgba(255, 255, 255, 0.4);
+                  color: var(--text-subtle);
               ">
                   <span style="font-weight: 500;">${article.source.name}</span>
                   <span>•</span>

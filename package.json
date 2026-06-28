@@ -7,9 +7,15 @@
     "node": ">=18.0.0"
   },
   "scripts": {
+    "build:html": "node scripts/build-html.js",
+    "build:css": "node scripts/build-css.js",
+    "build:js": "node scripts/build-js.js",
+    "build": "npm run build:html && npm run build:css && npm run build:js",
+    "prestart": "npm run build",
+    "predev": "npm run build",
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "railway:build": "npm install",
+    "railway:build": "npm install && npm run build",
     "railway:start": "npm start"
   },
   "dependencies": {

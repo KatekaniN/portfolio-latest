@@ -1,0 +1,120 @@
+/* Terminal app — themed console surface. Loads after windows-content so it can
+ * override the default window-content padding for a full-height console layout.
+ * Fully tokenized: follows the active light/dark theme. */
+
+.terminal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 0;
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.55;
+  overflow: hidden;
+  cursor: text;
+}
+
+.terminal-output {
+  flex: 1;
+  overflow-y: auto;
+  padding: 14px 16px 6px;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+.terminal-line {
+  margin: 0 0 2px;
+}
+
+.terminal-line.term-spacer {
+  height: 8px;
+}
+
+.term-accent {
+  color: var(--accent);
+}
+
+.term-success {
+  color: var(--success);
+}
+
+.term-warning {
+  color: var(--warning);
+}
+
+.term-muted {
+  color: var(--text-muted);
+}
+
+.term-error {
+  color: var(--danger);
+}
+
+.term-strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.terminal-echo .term-prompt-echo {
+  color: var(--success);
+  font-weight: 600;
+}
+
+.terminal-input-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px 14px;
+  border-top: 1px solid var(--border);
+}
+
+.terminal-prompt {
+  color: var(--success);
+  font-weight: 600;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.terminal-input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  padding: 0;
+}
+
+.terminal-input::placeholder {
+  color: var(--text-subtle);
+}
+
+.terminal-output a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.terminal-output a:hover {
+  text-decoration: underline;
+}
+
+.terminal-output::-webkit-scrollbar {
+  width: 10px;
+}
+
+.terminal-output::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.terminal-output::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 6px;
+}
+
+.terminal-output::-webkit-scrollbar-thumb:hover {
+  background: var(--text-subtle);
+}

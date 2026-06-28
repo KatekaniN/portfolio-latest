@@ -7,29 +7,29 @@ const rateLimit = require("express-rate-limit");
 // Load environment variables first
 dotenv.config();
 
-console.log("🔧 Loading server modules...");
+console.log("Loading server modules...");
 
 let contactRoutes, chatRoutes, weatherNewsRoutes;
 
 try {
   contactRoutes = require("./routes/contact.js");
-  console.log("✅ Contact routes loaded");
+  console.log("Contact routes loaded");
 } catch (error) {
-  console.error("❌ Error loading contact routes:", error.message);
+  console.error("Error loading contact routes:", error.message);
 }
 
 try {
   chatRoutes = require("./routes/chat.js");
-  console.log("✅ Chat routes loaded");
+  console.log("Chat routes loaded");
 } catch (error) {
-  console.error("❌ Error loading chat routes:", error.message);
+  console.error("Error loading chat routes:", error.message);
 }
 
 try {
   weatherNewsRoutes = require("./routes/weather-news.js");
-  console.log("✅ Weather/News routes loaded");
+  console.log("Weather/News routes loaded");
 } catch (error) {
-  console.error("❌ Error loading weather/news routes:", error.message);
+  console.error("Error loading weather/news routes:", error.message);
 }
 
 const app = express();
@@ -73,25 +73,25 @@ const limiter = rateLimit({
 app.use("/api", limiter);
 
 // Routes
-console.log("🔧 Setting up routes...");
+console.log("Setting up routes...");
 
 if (chatRoutes) {
   app.use("/api/chat", chatRoutes);
-  console.log("✅ Chat routes mounted");
+  console.log("Chat routes mounted");
 }
 
 if (weatherNewsRoutes) {
   app.use("/api", weatherNewsRoutes);
-  console.log("✅ Weather/News routes mounted");
+  console.log("Weather/News routes mounted");
 }
 
 if (contactRoutes) {
   app.use("/api/contact", contactRoutes);
-  console.log("✅ Contact routes mounted");
+  console.log("Contact routes mounted");
 }
 // Health check endpoint
 app.get("/health", (req, res) => {
-  console.log("🏥 Health check requested");
+  console.log("Health check requested");
   try {
     const healthData = {
       status: "ok",
@@ -104,10 +104,10 @@ app.get("/health", (req, res) => {
       newsApiConfigured: !!process.env.NEWSDATA_API_KEY,
       emailApiConfigured: !!process.env.BREVO_API_KEY,
     };
-    console.log("✅ Health check successful:", healthData);
+    console.log("Health check successful:", healthData);
     res.status(200).json(healthData);
   } catch (error) {
-    console.error("❌ Health check error:", error);
+    console.error("Health check error:", error);
     res.status(500).json({
       status: "error",
       message: error.message,
@@ -169,38 +169,38 @@ app.get("/test-brevo", async (req, res) => {
 });*/
 
 // Start server
-console.log("🚀 Starting server...");
+console.log("Starting server...");
 
 const server = app.listen(PORT, "0.0.0.0", () => {
   console.log("=".repeat(50));
-  console.log(`🚀 Portfolio server STARTED successfully!`);
-  console.log(`📍 Environment: ${process.env.NODE_ENV || "development"}`);
-  console.log(`🌐 Port: ${PORT}`);
-  console.log(`🔗 Health check: http://0.0.0.0:${PORT}/health`);
+  console.log(`Portfolio server STARTED successfully!`);
+  console.log(`Environment: ${process.env.NODE_ENV || "development"}`);
+  console.log(`Port: ${PORT}`);
+  console.log(`Health check: http://0.0.0.0:${PORT}/health`);
   console.log(
-    `🤖 Gemini API: ${process.env.GEMINI_API_KEY ? "✅ Configured" : "❌ Missing"}`
+    `Gemini API: ${process.env.GEMINI_API_KEY ? "Configured" : "Missing"}`
   );
   console.log(
-    `🌤️ Weather API: ${process.env.WEATHER_API_KEY ? "✅ Configured" : "❌ Missing"}`
+    `Weather API: ${process.env.WEATHER_API_KEY ? "Configured" : "Missing"}`
   );
   console.log(
-    `📧 Email API: ${process.env.BREVO_API_KEY ? "✅ Configured" : "❌ Missing"}`
+    `Email API: ${process.env.BREVO_API_KEY ? "Configured" : "Missing"}`
   );
   console.log(
-    `📰 News API: ${process.env.NEWSDATA_API_KEY ? "✅ Configured" : "❌ Missing"}`
+    `News API: ${process.env.NEWSDATA_API_KEY ? "Configured" : "Missing"}`
   );
   console.log("=".repeat(50));
 });
 
 server.on("error", (error) => {
-  console.error("❌ Server error:", error);
+  console.error("Server error:", error);
   process.exit(1);
 });
 
 // Graceful shutdown
 process.on("SIGTERM", () => {
-  console.log("🛑 SIGTERM received, shutting down gracefully");
+  console.log("SIGTERM received, shutting down gracefully");
   server.close(() => {
-    console.log("✅ Process terminated");
+    console.log("Process terminated");
   });
 });

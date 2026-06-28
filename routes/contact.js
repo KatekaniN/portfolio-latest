@@ -51,7 +51,7 @@ router.post("/", async (req, res) => {
 
     // Email to you (notification) - Windows 11 themed
     let sendSmtpEmail = new SibApiV3Sdk.SendSmtpEmail();
-    sendSmtpEmail.subject = `💼 Portfolio Contact from ${name}: ${subject}`;
+    sendSmtpEmail.subject = `Portfolio Contact from ${name}: ${subject}`;
     sendSmtpEmail.htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -85,7 +85,7 @@ router.post("/", async (req, res) => {
               font-size: 14px;
               letter-spacing: 0.5px;
             ">
-              📧 NEW CONTACT MESSAGE
+              NEW CONTACT MESSAGE
             </div>
             <h1 style="
               margin: 0;
@@ -210,8 +210,8 @@ router.post("/", async (req, res) => {
               border-radius: 8px;
               margin-bottom: 15px;
             ">
-              <div style="font-size: 14px; font-weight: 600; margin-bottom: 5px;">📧 Sent from Portfolio Contact Form</div>
-              <div style="font-size: 12px; opacity: 0.8;">🕒 ${new Date().toLocaleString(
+              <div style="font-size: 14px; font-weight: 600; margin-bottom: 5px;">Sent from Portfolio Contact Form</div>
+              <div style="font-size: 12px; opacity: 0.8;">${new Date().toLocaleString(
                 "en-US",
                 {
                   weekday: "long",
@@ -226,7 +226,7 @@ router.post("/", async (req, res) => {
             
             <div style="font-size: 12px; opacity: 0.6;">
               <a href="https://katekanin.github.io" style="color: #74C0FC; text-decoration: none;">
-                🌐 Visit Portfolio
+                Visit Portfolio
               </a>
               </a>
             </div>
@@ -253,7 +253,7 @@ router.post("/", async (req, res) => {
     console.log("Notification email sent, ID:", emailResult.body?.messageId);
 
     let autoReplyEmail = new SibApiV3Sdk.SendSmtpEmail();
-    autoReplyEmail.subject = "✨ Thank you for reaching out!";
+    autoReplyEmail.subject = "Thank you for reaching out!";
     autoReplyEmail.htmlContent = `
     <!DOCTYPE html>
     <html>
@@ -295,7 +295,7 @@ router.post("/", async (req, res) => {
               color: #0078d4;
               font-size: 20px;
               font-weight: 400;
-            ">Hi ${name}! 👋</h>
+            ">Hi ${name}!</h>
           </div>
 
           <!-- Main Content Card -->
@@ -378,7 +378,7 @@ router.post("/", async (req, res) => {
                 color: #0078d4;
                 font-size: 18px;
                 margin-bottom: 5px;
-              ">⚡</div>
+              "></div>
               <p style="
                 margin: 0;
                 color: #0078d4;
@@ -409,7 +409,7 @@ router.post("/", async (req, res) => {
               margin-top: 20px;
             ">
               <div style="font-size: 12px; opacity: 0.8; margin-bottom: 10px;">
-                🌐 <a href="https://linkedin.com/in/katekanin" style="color: #87ceeb; text-decoration: none;">Let's connect on LinkedIn</a>
+                <a href="https://linkedin.com/in/katekanin" style="color: #87ceeb; text-decoration: none;">Let's connect on LinkedIn</a>
               </div>
             </div>
           </div>

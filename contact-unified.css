@@ -1,8 +1,8 @@
 /* Unified Contact Form - Single cohesive design */
 .unified-contact-form {
-  background: rgba(255, 255, 255, 0.9);
+  background: var(--surface);
   backdrop-filter: blur(20px) saturate(125%);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
   box-shadow:
@@ -21,7 +21,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #0078d4, #106ebe, #005a9e);
+  background: linear-gradient(90deg, var(--accent), var(--accent-hover), var(--accent-active));
   border-radius: 2px 2px 0 0;
 }
 
@@ -33,13 +33,13 @@
 .unified-contact-form .contact-header h3 {
   font-size: 28px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text);
   margin: 0 0 8px 0;
   letter-spacing: -0.01em;
 }
 
 .unified-contact-form .contact-header p {
-  color: #6b7280;
+  color: var(--text-muted);
   font-size: 16px;
   margin: 0;
 }
@@ -57,21 +57,21 @@
   align-items: center;
   gap: 16px;
   padding: 16px;
-  background: rgba(248, 250, 252, 0.8);
-  border: 1px solid rgba(226, 232, 240, 0.8);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: 12px;
   transition: all 0.2s ease;
 }
 
 .contact-method:hover {
-  background: rgba(241, 245, 249, 0.9);
+  background: var(--surface-3);
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .contact-method i {
   font-size: 24px;
-  color: #0078d4;
+  color: var(--accent);
   width: 32px;
   text-align: center;
   flex-shrink: 0;
@@ -85,12 +85,12 @@
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #1f2937;
+  color: var(--text);
   margin-bottom: 4px;
 }
 
 .contact-method a {
-  color: #0078d4;
+  color: var(--accent);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
@@ -98,13 +98,13 @@
 }
 
 .contact-method a:hover {
-  color: #106ebe;
+  color: var(--accent-hover);
   text-decoration: underline;
 }
 
 /* Special styling for booking link */
 .contact-method .booking-link {
-  background: linear-gradient(135deg, #0078d4, #106ebe);
+  background: linear-gradient(135deg, var(--accent), var(--accent-hover));
   color: white !important;
   padding: 8px 16px;
   border-radius: 8px;
@@ -116,7 +116,7 @@
 }
 
 .contact-method .booking-link:hover {
-  background: linear-gradient(135deg, #106ebe, #005a9e);
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-active));
   color: white !important;
   transform: translateY(-1px);
   box-shadow: 0 4px 12px rgba(0, 120, 212, 0.4);
@@ -139,15 +139,15 @@
   background: linear-gradient(
     90deg,
     transparent,
-    #e2e8f0 20%,
-    #e2e8f0 80%,
+    var(--border) 20%,
+    var(--border) 80%,
     transparent
   );
 }
 
 .contact-divider span {
-  background: rgba(255, 255, 255, 0.9);
-  color: #6b7280;
+  background: var(--surface);
+  color: var(--text-muted);
   font-size: 14px;
   font-weight: 500;
   padding: 0 16px;
@@ -173,7 +173,7 @@
   display: block;
   font-size: 14px;
   font-weight: 600;
-  color: #374151;
+  color: var(--text);
   margin-bottom: 8px;
 }
 
@@ -183,11 +183,11 @@
 .unified-contact-form .form-group textarea {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(43, 43, 51, 0.98) !important;
-  border: 2px solid #144cbb;
+  background: var(--surface-2) !important;
+  border: 2px solid var(--accent);
   border-radius: 10px;
   font-size: 14px;
-  color: #ffffff !important;
+  color: var(--text) !important;
   font-family: inherit;
   transition: all 0.2s ease;
   box-sizing: border-box;
@@ -198,7 +198,7 @@
 .form-textarea::placeholder,
 .unified-contact-form .form-group input::placeholder,
 .unified-contact-form .form-group textarea::placeholder {
-  color: #4b5563 !important;
+  color: var(--text-muted) !important;
   opacity: 1;
 }
 
@@ -207,17 +207,17 @@
 .unified-contact-form .form-group input:focus,
 .unified-contact-form .form-group textarea:focus {
   outline: none;
-  border-color: #0078d4;
-  background: #ffffff !important;
+  border-color: var(--accent);
+  background: var(--surface) !important;
   box-shadow: 0 0 0 3px rgba(0, 120, 212, 0.1);
-  color: #000000 !important;
+  color: var(--text) !important;
 }
 
 .form-input:focus::placeholder,
 .form-textarea:focus::placeholder,
 .unified-contact-form .form-group input:focus::placeholder,
 .unified-contact-form .form-group textarea:focus::placeholder {
-  color: #6b7280 !important;
+  color: var(--text-muted) !important;
   opacity: 0.7;
 }
 
@@ -230,7 +230,7 @@
 .form-submit-btn {
   width: 100%;
   padding: 16px 24px;
-  background: linear-gradient(135deg, #0078d4 0%, #106ebe 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
   color: white;
   border: none;
   border-radius: 10px;
@@ -246,7 +246,7 @@
 }
 
 .form-submit-btn:hover {
-  background: linear-gradient(135deg, #106ebe 0%, #005a9e 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-active) 100%);
   transform: translateY(-2px);
   box-shadow: 0 8px 24px rgba(0, 120, 212, 0.35);
 }
@@ -284,122 +284,13 @@
 .success-message {
   background: rgba(16, 185, 129, 0.1);
   border: 1px solid rgba(16, 185, 129, 0.3);
-  color: #065f46;
+  color: var(--success);
 }
 
 .error-message {
   background: rgba(239, 68, 68, 0.1);
   border: 1px solid rgba(239, 68, 68, 0.3);
-  color: #7f1d1d;
-}
-
-/* Dark mode support */
-@media (prefers-color-scheme: dark) {
-  .unified-contact-form {
-    background: rgba(30, 30, 34, 0.95);
-    border-color: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
-  }
-
-  .unified-contact-form .contact-header h3 {
-    color: #ffffff;
-  }
-
-  .unified-contact-form .contact-header p {
-    color: #d1d5db;
-  }
-
-  .contact-method {
-    background: rgba(45, 45, 50, 0.8);
-    border-color: rgba(255, 255, 255, 0.1);
-  }
-
-  .contact-method:hover {
-    background: rgba(55, 55, 60, 0.9);
-  }
-
-  .contact-method i {
-    color: #60a5fa;
-  }
-
-  .contact-method strong {
-    color: #ffffff;
-  }
-
-  .contact-method a {
-    color: #60a5fa;
-  }
-
-  .contact-method a:hover {
-    color: #93c5fd;
-  }
-
-  .contact-divider::before {
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2) 20%,
-      rgba(255, 255, 255, 0.2) 80%,
-      transparent
-    );
-  }
-
-  .contact-divider span {
-    background: rgba(30, 30, 34, 0.95);
-    color: #d1d5db;
-  }
-
-  .form-label {
-    color: #ffffff;
-  }
-
-  .form-input,
-  .form-textarea {
-    background: rgba(30, 30, 34, 0.95);
-    border-color: rgba(255, 255, 255, 0.25);
-    color: #ffffff;
-    font-weight: 500;
-  }
-
-  .form-input::placeholder,
-  .form-textarea::placeholder {
-    color: #9ca3af;
-    opacity: 0.8;
-  }
-
-  .form-input:focus,
-  .form-textarea:focus {
-    border-color: #60a5fa;
-    background: rgba(30, 30, 34, 1);
-    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.15);
-    color: #ffffff;
-  }
-
-  .form-input:focus::placeholder,
-  .form-textarea:focus::placeholder {
-    color: #6b7280;
-    opacity: 0.7;
-  }
-
-  .form-submit-btn {
-    background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
-  }
-
-  .form-submit-btn:hover {
-    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
-  }
-
-  .success-message {
-    background: rgba(52, 211, 153, 0.15);
-    border-color: rgba(52, 211, 153, 0.3);
-    color: #a7f3d0;
-  }
-
-  .error-message {
-    background: rgba(248, 113, 113, 0.15);
-    border-color: rgba(248, 113, 113, 0.3);
-    color: #fecaca;
-  }
+  color: var(--danger);
 }
 
 /* Responsive adjustments */

@@ -2,9 +2,9 @@
 
 /* Skills Window Dark Theme */
 #skills .window-content {
-  background: rgba(30, 30, 34, 0.95);
+  background: var(--surface);
   backdrop-filter: blur(20px) saturate(125%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
   box-shadow:
@@ -13,7 +13,7 @@
   position: relative;
   overflow-y: auto;
   height: calc(100% - 40px);
-  color: #ffffff;
+  color: var(--text);
 }
 
 #skills .window-content::before {
@@ -23,20 +23,20 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);
+  background: linear-gradient(90deg, var(--accent), var(--accent), var(--accent-hover));
   border-radius: 2px 2px 0 0;
 }
 
 #skills .window-content h2 {
   font-size: 28px;
   font-weight: 600;
-  color: #ffffff;
+  color: var(--text);
   margin: 0 0 8px 0;
   letter-spacing: -0.01em;
 }
 
 #skills .window-content p {
-  color: #d1d5db;
+  color: var(--text-muted);
   font-size: 16px;
   margin: 0 0 24px 0;
   opacity: 0.9;
@@ -46,9 +46,9 @@
 .skills-category {
   margin-bottom: 24px;
   padding: 24px;
-  background: rgba(45, 45, 50, 0.8);
+  background: var(--surface-2);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 16px;
   transition: all 0.3s ease;
   position: relative;
@@ -62,13 +62,13 @@
   left: 0;
   right: 0;
   height: 3px;
-  background: linear-gradient(90deg, #60a5fa, #3b82f6);
+  background: linear-gradient(90deg, var(--accent), var(--accent));
   opacity: 0;
   transition: opacity 0.3s ease;
 }
 
 .skills-category:hover {
-  background: rgba(55, 55, 60, 0.9);
+  background: var(--surface-3);
   transform: translateY(-2px);
   box-shadow: 0 8px 32px rgba(96, 165, 250, 0.15);
   border-color: rgba(96, 165, 250, 0.3);
@@ -83,13 +83,13 @@
   align-items: center;
   gap: 12px;
   margin-bottom: 16px;
-  color: #ffffff;
+  color: var(--text);
   font-size: 18px;
   font-weight: 600;
 }
 
 .skills-category i {
-  color: #60a5fa;
+  color: var(--accent);
   font-size: 20px;
 }
 
@@ -136,9 +136,9 @@
 
 /* Resume Window Dark Theme */
 #resume .window-content {
-  background: rgba(30, 30, 34, 0.95);
+  background: var(--surface);
   backdrop-filter: blur(20px) saturate(125%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
   border-radius: 16px;
   padding: 32px;
   box-shadow:
@@ -147,7 +147,7 @@
   position: relative;
   overflow: hidden;
   height: calc(100% - 40px);
-  color: #ffffff;
+  color: var(--text);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -160,7 +160,7 @@
   left: 0;
   right: 0;
   height: 4px;
-  background: linear-gradient(90deg, #60a5fa, #3b82f6, #2563eb);
+  background: linear-gradient(90deg, var(--accent), var(--accent), var(--accent-hover));
   border-radius: 2px 2px 0 0;
 }
 
@@ -174,13 +174,13 @@
 .resume-download-container h2 {
   font-size: 32px;
   font-weight: 700;
-  color: #ffffff;
+  color: var(--text);
   margin: 0 0 16px 0;
   letter-spacing: -0.01em;
 }
 
 .resume-download-container p {
-  color: #d1d5db;
+  color: var(--text-muted);
   font-size: 18px;
   margin: 0 0 32px 0;
   opacity: 0.9;
@@ -193,7 +193,7 @@
   align-items: center;
   gap: 12px;
   padding: 16px 32px;
-  background: linear-gradient(135deg, #0375f0 0%, #0d7aec 100%);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
   color: white;
   text-decoration: none;
   border-radius: 12px;
@@ -205,7 +205,7 @@
 }
 
 .download-resume:hover {
-  background: linear-gradient(135deg, #0d7aec 0%, #2563eb 100%);
+  background: linear-gradient(135deg, var(--accent-hover) 0%, var(--accent-hover) 100%);
   transform: translateY(-3px);
   box-shadow: 0 8px 32px rgba(96, 165, 250, 0.4);
   text-decoration: none;
@@ -225,11 +225,11 @@
 .resume-file-info {
   margin-top: 24px;
   padding: 16px;
-  background: rgba(45, 45, 50, 0.6);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: var(--surface-2);
+  border: 1px solid var(--border);
   border-radius: 12px;
   font-size: 14px;
-  color: #d1d5db;
+  color: var(--text-muted);
   opacity: 0.8;
 }
 

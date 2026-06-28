@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Katekani Nyamandi - Portfolio</title>
+
+    <!-- Apply persisted theme before paint to avoid flash -->
+    <script>
+      (function () {
+        try {
+          var t = localStorage.getItem("theme");
+          if (t === "dark" || t === "light") {
+            document.documentElement.setAttribute("data-theme", t);
+          }
+        } catch (e) {}
+      })();
+    </script>
+
+    <!-- Preload critical background image -->
+    <link rel="preload" href="./icons/wallpaper.png" as="image" />
+
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="stylesheet" href="contact-unified.css" />
+    <link rel="stylesheet" href="about-modern.css" />
+    <link rel="stylesheet" href="journey-timeline.css" />
+    <link rel="stylesheet" href="skills-resume-dark.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Happy+Monkey&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+  </head>
+  <body>
+    <div class="desktop" id="desktop">
+      <!-- Desktop Icons with Windows 11 positioning -->
+      <div
+        class="desktop-icon about-icon"
+        style="top: 80px; left: 60px"
+        data-window="about"
+      >
+        <div class="icon-image">
+          <i class="fa-solid fa-house-user" style="color: #ffffff"></i>
+        </div>
+        <div class="icon-label">About Me</div>
+      </div>
+
+      <div
+        class="desktop-icon projects-icon"
+        style="top: 200px; left: 60px"
+        data-window="projects"
+      >
+        <div class="icon-image">
+          <img src="./icons/terminal.png" alt="terminal icon" />
+        </div>
+        <div class="icon-label">Projects</div>
+      </div>
+
+      <div
+        class="desktop-icon skills-icon"
+        style="top: 320px; left: 60px"
+        data-window="skills"
+      >
+        <div class="icon-image">
+          <img src="./icons/settings.png" alt="settings icon" />
+        </div>
+        <div class="icon-label">Skills</div>
+      </div>
+
+      <div
+        class="desktop-icon contact-icon"
+        style="top: 80px; left: 180px"
+        data-window="contact"
+      >
+        <div class="icon-image">
+          <img src="./icons/email.png" alt="email icon" />
+        </div>
+        <div class="icon-label">Contact</div>
+      </div>
+
+      <div
+        class="desktop-icon personal-icon"
+        style="top: 200px; left: 180px"
+        data-window="personal"
+      >
+        <div class="icon-image">
+          <i class="fas fa-route" style="color: #2c7ebd"></i>
+        </div>
+        <div class="icon-label">My Journey</div>
+      </div>
+
+      <div
+        class="desktop-icon resume-icon"
+        style="top: 320px; left: 180px"
+        data-window="resume"
+      >
+        <div class="icon-image">
+          <img src="./icons/folder.png" alt="folder icon" />
+        </div>
+        <div class="icon-label">Resume</div>
+      </div>
+
+      <!-- Games Desktop Icon -->
+      <div
+        class="desktop-icon games-icon"
+        style="top: 440px; left: 180px"
+        data-window="games"
+      >
+        <div class="icon-image">
+          <i class="fa-solid fa-gamepad" style="color: #2c7ebd"></i>
+        </div>
+        <div class="icon-label">Games</div>
+      </div>
+
+      <!-- Terminal Desktop Icon -->
+      <div
+        class="desktop-icon terminal-icon"
+        style="top: 440px; left: 60px"
+        data-window="terminal"
+      >
+        <div class="icon-image">
+          <i class="fa-solid fa-terminal" style="color: #2c7ebd"></i>
+        </div>
+        <div class="icon-label">Terminal</div>
+      </div>
+
+      <!-- include: windows/about.html -->
+      <!-- include: windows/projects.html -->
+      <!-- include: windows/skills.html -->
+      <!-- include: windows/contact.html -->
+      <!-- include: windows/personal.html -->
+      <!-- include: windows/resume.html -->
+      <!-- Games Window -->
+      <!-- include: windows/games.html -->
+      <!-- Terminal Window -->
+      <!-- include: windows/terminal.html -->    </div>
+
+    <!-- Windows 11 Style Taskbar -->
+    <div class="taskbar">
+      <div class="taskbar-center">
+        <button class="start-button" onclick="showStartMenu()">
+          <i class="fab fa-windows fa-2x" style="color: #1792e1"></i>
+        </button>
+        <div class="open-windows" id="openWindows"></div>
+      </div>
+      <div class="taskbar-tray">
+        <button
+          class="tray-button"
+          id="trayTerminal"
+          title="Open Terminal"
+          aria-label="Open Terminal"
+          onclick="windowManager.openWindow('terminal')"
+        >
+          <i class="fas fa-terminal"></i>
+        </button>
+        <button
+          class="tray-button"
+          id="trayThemeToggle"
+          title="Toggle light/dark theme"
+          aria-label="Toggle light/dark theme"
+          onclick="windowManager.toggleTheme()"
+        >
+          <i class="fas fa-moon"></i>
+        </button>
+      </div>
+      <div class="taskbar-time" id="clock"></div>
+    </div>
+
+    <!-- Inject profile data and hydrate the UI -->
+    <!-- Background Image Optimization Script -->
+    <script>
+      // Preload background image for faster loading
+      (function () {
+        const bgImage = new Image();
+        bgImage.onload = function () {
+          document.body.classList.add("bg-loaded");
+        };
+        bgImage.src = "./icons/wallpaper.png";
+      })();
+    </script>
+
+    <!-- Scripts -->
+    <script src="frontend-config.js"></script>
+    <script src="profile-data.js"></script>
+    <script src="profile-hydrate.js"></script>
+    <script src="about-modern.js"></script>
+
+    <script src="index.js"></script>
+    <script src="weather-news.js"></script>
+    <script src="contact.js"></script>
+    <script src="games.js"></script>
+  </body>
+</html>

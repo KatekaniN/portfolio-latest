@@ -57,678 +57,33 @@ class Windows11Manager {
     console.log(`Initialized ${windows.length} windows at body level`);
   }
 
-  showPowerOptions() {
-    // Close any existing power menu first
-    const existingMenu = document.getElementById("powerMenu");
-    if (existingMenu) {
-      existingMenu.remove();
-    }
 
-    // Create power options menu
-    const powerMenu = document.createElement("div");
-    powerMenu.id = "powerMenu";
-    powerMenu.className = "power-menu";
-    powerMenu.style.cssText = `
-    position: fixed;
-    bottom: 70px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 300px;
-    background: rgba(32, 32, 32, 0.95);
-    backdrop-filter: blur(40px);
-    color: white;
-    border-radius: 12px;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10002;
-    animation: powerMenuSlide 0.3s ease-out;
-    overflow: hidden;
-`;
 
-    powerMenu.innerHTML = `
-    <div style="padding: 20px;">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
-            <div style="display: flex; align-items: center; gap: 12px;">
-                <i class="fas fa-power-off" style="color: #0078d4; font-size: 20px;"></i>
-                <h3 style="margin: 0; font-size: 16px;">Power Options</h3>
-            </div>
-            <button onclick="windowManager.closePowerMenu()" 
-                    style="background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: color 0.2s;"
-                    onmouseover="this.style.color='white'"
-                    onmouseout="this.style.color='rgba(255,255,255,0.6)'">×</button>
-        </div>
-        
-        <div class="power-options-grid">
-            ${this.createPowerOption(
-              "sleep",
-              "fas fa-moon",
-              "Sleep Mode",
-              "Dim the lights and save your session",
-              "#4a90e2"
-            )}
-            ${this.createPowerOption(
-              "restart",
-              "fas fa-redo-alt",
-              "Restart",
-              "Refresh the experience with new animations",
-              "#FFB908"
-            )}
-            ${this.createPowerOption(
-              "shutdown",
-              "fas fa-power-off",
-              "Shut Down",
-              "Clean shutdown with farewell message",
-              ""
-            )}
-            ${this.createPowerOption(
-              "hibernate",
-              "fas fa-pause-circle",
-              "Hibernate",
-              "Freeze current state and minimize all",
-              "#938EDF"
-            )}
-            ${this.createPowerOption(
-              "maintenance",
-              "fas fa-tools",
-              "Maintenance",
-              "Clear cache and optimize performance",
-              "#95a5a6"
-            )}
-        </div>
-        
-        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; opacity: 0.7; text-align: center;">
-            <i class="fas fa-info-circle"></i> Portfolio will remember your session
-        </div>
-    </div>
-`;
 
-    document.body.appendChild(powerMenu);
 
-    // Prevent immediate closing by stopping event propagation
-    powerMenu.addEventListener("click", (e) => {
-      e.stopPropagation();
-    });
 
-    // Set up click-outside-to-close with a delay
-    setTimeout(() => {
-      const closeHandler = (e) => {
-        if (
-          !powerMenu.contains(e.target) &&
-          !e.target.closest(".start-button")
-        ) {
-          this.closePowerMenu();
-          document.removeEventListener("click", closeHandler);
-        }
-      };
-      document.addEventListener("click", closeHandler);
-    }, 100);
 
-    // Also close with Escape key
-    const escapeHandler = (e) => {
-      if (e.key === "Escape") {
-        this.closePowerMenu();
-        document.removeEventListener("keydown", escapeHandler);
-      }
-    };
-    document.addEventListener("keydown", escapeHandler);
-  }
 
-  // Update the createPowerOption method to prevent event bubbling
-  createPowerOption(action, icon, title, description, color) {
-    return `
-    <div class="power-option" data-action="${action}" 
-         style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; margin-bottom: 8px;"
-         onmouseover="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateX(4px)'"
-         onmouseout="this.style.background='transparent'; this.style.transform='translateX(0px)'"
-         onclick="event.stopPropagation(); windowManager.executePowerAction('${action}');">
-        <div style="width: 40px; height: 40px; background: ${color}; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 2px 8px rgba(0,0,0,0.2);">
-            <i class="${icon}" style="color: white; font-size: 18px;"></i>
-        </div>
-        <div style="flex: 1;">
-            <div style="font-weight: 600; margin-bottom: 2px;">${title}</div>
-            <div style="font-size: 12px; opacity: 0.8; line-height: 1.3;">${description}</div>
-        </div>
-        <div style="opacity: 0.4; transition: opacity 0.2s;">
-            <i class="fas fa-chevron-right"></i>
-        </div>
-    </div>
-`;
-  }
 
-  // Update the closePowerMenu method
-  closePowerMenu() {
-    const powerMenu = document.getElementById("powerMenu");
-    if (powerMenu) {
-      powerMenu.style.animation = "powerMenuSlide 0.2s ease-out reverse";
-      setTimeout(() => {
-        if (powerMenu.parentElement) {
-          powerMenu.remove();
-        }
-      }, 200);
-    }
-  }
 
-  // Update executePowerAction to ensure menu closes properly
-  executePowerAction(action) {
-    // Close menu immediately
-    const powerMenu = document.getElementById("powerMenu");
-    if (powerMenu) {
-      powerMenu.remove();
-    }
 
-    // Small delay before executing action to ensure menu is gone
-    setTimeout(() => {
-      switch (action) {
-        case "sleep":
-          this.sleepMode();
-          break;
-        case "restart":
-          this.restartSystem();
-          break;
-        case "shutdown":
-          this.shutdownSystem();
-          break;
-        case "hibernate":
-          this.hibernateSystem();
-          break;
-        case "demo":
-          this.demoMode();
-          break;
-        case "maintenance":
-          this.maintenanceMode();
-          break;
-      }
-    }, 100);
-  }
 
-  // Add this method to toggle power menu (for the start menu button)
-  togglePowerMenu() {
-    const existingMenu = document.getElementById("powerMenu");
-    if (existingMenu) {
-      this.closePowerMenu();
-    } else {
-      this.showPowerOptions();
-    }
-  }
 
-  // Create individual power option
-  createPowerOption(action, icon, title, description, color) {
-    return `
-    <div class="power-option" data-action="${action}" 
-         style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; margin-bottom: 8px;"
-         onmouseover="this.style.background='rgba(255,255,255,0.05)'"
-         onmouseout="this.style.background='transparent'"
-         onclick="windowManager.executePowerAction('${action}');">
-        <div style="width: 40px; height: 40px; background: ${color}; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-            <i class="${icon}" style="color: white; font-size: 18px;"></i>
-        </div>
-        <div style="flex: 1;">
-            <div style="font-weight: 600; margin-bottom: 2px;">${title}</div>
-            <div style="font-size: 12px; opacity: 0.8; line-height: 1.3;">${description}</div>
-        </div>
-    </div>
-`;
-  }
 
-  // Execute power actions
-  executePowerAction(action) {
-    this.closePowerMenu();
 
-    switch (action) {
-      case "sleep":
-        this.sleepMode();
-        break;
-      case "restart":
-        this.restartSystem();
-        break;
-      case "shutdown":
-        this.shutdownSystem();
-        break;
-      case "hibernate":
-        this.hibernateSystem();
-        break;
-      case "demo":
-        this.demoMode();
-        break;
-      case "maintenance":
-        this.maintenanceMode();
-        break;
-    }
-  }
 
-  // Get time-appropriate greeting
-  getTimeBasedGreeting() {
-    const hour = new Date().getHours();
 
-    if (hour >= 5 && hour < 12) {
-      return {
-        message: "Good morning! ☀️",
-        description: "Portfolio is now awake and ready.",
-      };
-    } else if (hour >= 12 && hour < 17) {
-      return {
-        message: "Good afternoon! 🌤️",
-        description: "Portfolio is back online.",
-      };
-    } else if (hour >= 17 && hour < 21) {
-      return {
-        message: "Good evening! 🌅",
-        description: "Portfolio has resumed activity.",
-      };
-    } else {
-      return {
-        message: "Good night! 🌙",
-        description: "Portfolio is active in night mode.",
-      };
-    }
-  }
 
-  // Sleep Mode - Dim everything and show screensaver
-  sleepMode() {
-    personalFeatures.showNotification(
-      "Entering Sleep Mode 🌙",
-      "Portfolio is going to sleep. Click anywhere to wake up.",
-      "fas fa-moon"
-    );
 
-    // Dim the entire screen
-    const sleepOverlay = document.createElement("div");
-    sleepOverlay.id = "sleepOverlay";
-    sleepOverlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 15000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    animation: fadeIn 2s ease;
-`;
 
-    sleepOverlay.innerHTML = `
-    <div style="text-align: center; color: white;">
-        <div style="font-size: 48px; margin-bottom: 16px; animation: pulse 2s infinite;">🌙</div>
-        <div style="font-size: 24px; margin-bottom: 8px;">Sleep Mode</div>
-        <div style="font-size: 14px; opacity: 0.7;">Click anywhere to wake up</div>
-        <div id="sleepTime" style="font-size: 32px; margin-top: 20px; font-family: monospace;"></div>
-    </div>
-`;
 
-    document.body.appendChild(sleepOverlay);
 
-    // Show current time
-    const updateSleepTime = () => {
-      const timeElement = document.getElementById("sleepTime");
-      if (timeElement) {
-        timeElement.textContent = new Date().toLocaleTimeString();
-      }
-    };
 
-    const sleepInterval = setInterval(updateSleepTime, 1000);
-    updateSleepTime();
 
-    // Wake up on click
-    sleepOverlay.addEventListener("click", () => {
-      clearInterval(sleepInterval);
-      sleepOverlay.remove();
-      const greeting = this.getTimeBasedGreeting();
-      personalFeatures.showNotification(
-        greeting.message,
-        greeting.description,
-        "fas fa-sun"
-      );
-    });
-  }
 
-  // Restart - Reload with animation
-  restartSystem() {
-    personalFeatures.showNotification(
-      "Restarting... 🔄",
-      "Portfolio will restart with fresh animations.",
-      "fas fa-redo-alt"
-    );
 
-    // Create restart animation
-    const restartOverlay = document.createElement("div");
-    restartOverlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: #0078d4;
-    z-index: 20000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 1s ease;
-`;
 
-    restartOverlay.innerHTML = `
-    <div style="text-align: center; color: white;">
-        <div style="width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
-        <div style="font-size: 24px; margin-bottom: 8px;">Restarting</div>
-        <div style="font-size: 14px; opacity: 0.8;">Please wait...</div>
-    </div>
-`;
 
-    document.body.appendChild(restartOverlay);
-
-    setTimeout(() => {
-      location.reload();
-    }, 3000);
-  }
-
-  // Shutdown - Farewell message and blank screen
-  shutdownSystem() {
-    personalFeatures.showNotification(
-      "Shutting Down...",
-      "Thanks for visiting! See you next time.",
-      "fas fa-power-off"
-    );
-
-    const shutdownOverlay = document.createElement("div");
-    shutdownOverlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d30 50%, #1e1e1e 100%);
-    z-index: 20000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    animation: fadeIn 2s ease;
-`;
-
-    shutdownOverlay.innerHTML = `
-    <div style="text-align: center; color: white; animation: fadeInUp 1s ease 2s both; max-width: 600px; padding: 40px;">
-        <div style="margin-bottom: 30px;">
-            <i class="fas fa-user-circle" style="font-size: 64px; color: #0078d4; margin-bottom: 20px;"></i>
-        </div>
-        
-        <div style="font-size: 36px; margin-bottom: 20px; font-weight: 300;">Thanks for exploring my portfolio!</div>
-        
-        <div style="font-size: 18px; opacity: 0.8; margin-bottom: 30px; line-height: 1.6;">
-            I hope you enjoyed discovering my projects, skills, and the interactive Windows 11 experience.<br>
-            Feel free to connect with me for opportunities or collaborations.
-        </div>
-        
-
-        
-        <div style="margin-bottom: 30px;">
-            <div style="font-size: 16px; margin-bottom: 15px; opacity: 0.9;">Connect with me:</div>
-            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
-                <a href="https://github.com/katekanin" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
-                    <i class="fab fa-github" style="font-size: 24px;"></i>
-                </a>
-                <a href="https://linkedin.com/in/katekanin" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
-                    <i class="fab fa-linkedin" style="font-size: 24px;"></i>
-                </a>
-                <a href="https://calendar.app.google/LnkWXbra3MUtCyQM9" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
-                    <i class="fas fa-calendar-alt" style="font-size: 24px;"></i>
-                </a>
-            </div>
-        </div>
-        
-        <button onclick="location.reload()" 
-                style="background: linear-gradient(135deg, #0078d4, #106ebe); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);"
-                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 120, 212, 0.4)'"
-                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 120, 212, 0.3)'">
-            <i class="fas fa-power-off" style="margin-right: 8px;"></i>
-            Power On Again
-        </button>
-        
-        <div style="margin-top: 30px; font-size: 14px; opacity: 0.5;">
-            <i class="fas fa-heart" style="margin-right: 5px; color: #ff6b6b;"></i>
-            Made with love and JavaScript by Katekani Nyamandi
-        </div>
-    </div>
-`;
-
-    document.body.appendChild(shutdownOverlay);
-  }
-
-  // Hibernate - Minimize all windows and show desktop
-  hibernateSystem() {
-    personalFeatures.showNotification(
-      "Hibernating... ⏸️",
-      "All windows minimized. State saved for later.",
-      "fas fa-pause-circle"
-    );
-
-    // Store current window states
-    const windowStates = this.activeWindows.map((windowId) => {
-      const window = document.getElementById(windowId);
-      return {
-        id: windowId,
-        left: window.style.left,
-        top: window.style.top,
-        width: window.style.width,
-        height: window.style.height,
-        zIndex: window.style.zIndex,
-      };
-    });
-
-    localStorage.setItem("hibernatedWindows", JSON.stringify(windowStates));
-
-    // Minimize all windows with animation
-    document.querySelectorAll(".window.active").forEach((window, index) => {
-      setTimeout(() => {
-        window.style.animation = "windowMinimize 0.5s ease-out forwards";
-        setTimeout(() => {
-          window.classList.remove("active");
-          window.style.animation = "";
-        }, 500);
-      }, index * 100);
-    });
-
-    this.activeWindows = [];
-    this.updateTaskbar();
-
-    // Add restore button to desktop
-    setTimeout(() => {
-      const restoreButton = document.createElement("button");
-      restoreButton.style.cssText = `
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: rgba(0, 120, 212, 0.9);
-        color: white;
-        border: none;
-        padding: 16px 32px;
-        border-radius: 8px;
-        cursor: pointer;
-        font-size: 16px;
-        font-weight: 600;
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-        animation: pulse 2s infinite;
-    `;
-      restoreButton.innerHTML = '<i class="fas fa-play"></i> Restore Session';
-      restoreButton.onclick = () =>
-        this.restoreHibernatedSession(restoreButton);
-
-      document.body.appendChild(restoreButton);
-    }, 1000);
-  }
-
-  // Demo Mode - Auto showcase features
-  demoMode() {
-    personalFeatures.showNotification(
-      "Demo Mode Activated! 🎬",
-      "Sit back and watch the automated showcase.",
-      "fas fa-play-circle"
-    );
-
-    const demoSequence = [
-      () => this.openWindow("about"),
-      () => this.openWindow("projects"),
-      () => this.openWindow("skills"),
-      () => this.openWindow("contact"),
-      () => this.openWindow("personal"),
-      () => this.openWindow("resume"),
-      () => this.showStartMenu(),
-      () => this.closeStartMenu(),
-      () => {
-        // Close all windows
-        [...this.activeWindows].forEach((windowId) => {
-          this.closeWindow(windowId);
-        });
-      },
-    ];
-
-    demoSequence.forEach((action, index) => {
-      setTimeout(action, (index + 1) * 2000);
-    });
-
-    // End demo
-    setTimeout(
-      () => {
-        personalFeatures.showNotification(
-          "Demo Complete! ✨",
-          "Feel free to explore on your own now.",
-          "fas fa-check-circle"
-        );
-      },
-      demoSequence.length * 2000 + 2000
-    );
-  }
-
-  // Maintenance Mode - Clear cache and optimize
-  maintenanceMode() {
-    personalFeatures.showNotification(
-      "Maintenance Mode 🔧",
-      "Optimizing performance and clearing cache...",
-      "fas fa-tools"
-    );
-
-    // Clear localStorage
-    const keysToKeep = ["hibernatedWindows"];
-    const allKeys = Object.keys(localStorage);
-    allKeys.forEach((key) => {
-      if (!keysToKeep.includes(key)) {
-        localStorage.removeItem(key);
-      }
-    });
-
-    // Close all windows
-    [...this.activeWindows].forEach((windowId) => {
-      this.closeWindow(windowId);
-    });
-
-    // Reset icon positions
-    document.querySelectorAll(".desktop-icon").forEach((icon) => {
-      icon.style.transform = "";
-      icon.classList.remove("selected");
-    });
-
-    // Show maintenance progress
-    const progressOverlay = document.createElement("div");
-    progressOverlay.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.8);
-    z-index: 15000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-`;
-
-    progressOverlay.innerHTML = `
-    <div style="text-align: center; color: white;">
-        <div style="font-size: 48px; margin-bottom: 20px;">🔧</div>
-        <div style="font-size: 24px; margin-bottom: 20px;">Maintenance in Progress</div>
-        <div style="width: 300px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden;">
-            <div id="maintenanceProgress" style="width: 0%; height: 100%; background: #0078d4; border-radius: 2px; transition: width 0.3s ease;"></div>
-        </div>
-        <div id="maintenanceStatus" style="margin-top: 12px; font-size: 14px; opacity: 0.8;">Starting maintenance...</div>
-    </div>
-`;
-
-    document.body.appendChild(progressOverlay);
-
-    const steps = [
-      "Clearing temporary files...",
-      "Optimizing animations...",
-      "Refreshing components...",
-      "Updating cache...",
-      "Finalizing...",
-    ];
-
-    steps.forEach((step, index) => {
-      setTimeout(
-        () => {
-          document.getElementById("maintenanceStatus").textContent = step;
-          document.getElementById("maintenanceProgress").style.width = `${
-            ((index + 1) / steps.length) * 100
-          }%`;
-        },
-        (index + 1) * 800
-      );
-    });
-
-    setTimeout(
-      () => {
-        progressOverlay.remove();
-        personalFeatures.showNotification(
-          "Maintenance Complete! ✅",
-          "Portfolio optimized and ready for peak performance.",
-          "fas fa-check-circle"
-        );
-      },
-      steps.length * 800 + 1000
-    );
-  }
-
-  // Close power menu
-  closePowerMenu() {
-    const powerMenu = document.getElementById("powerMenu");
-    if (powerMenu) {
-      powerMenu.style.animation = "powerMenuSlide 0.3s ease-out reverse";
-      setTimeout(() => powerMenu.remove(), 300);
-    }
-  }
-
-  // Restore hibernated session
-  restoreHibernatedSession(button) {
-    const hibernatedWindows = JSON.parse(
-      localStorage.getItem("hibernatedWindows") || "[]"
-    );
-
-    button.remove();
-
-    hibernatedWindows.forEach((windowState, index) => {
-      setTimeout(() => {
-        this.openWindow(windowState.id);
-        const window = document.getElementById(windowState.id);
-        if (window) {
-          window.style.left = windowState.left;
-          window.style.top = windowState.top;
-          window.style.width = windowState.width;
-          window.style.height = windowState.height;
-          window.style.zIndex = windowState.zIndex;
-        }
-      }, index * 200);
-    });
-
-    const greeting = this.getTimeBasedGreeting();
-    personalFeatures.showNotification(
-      greeting.message,
-      "All your windows are back where you left them.",
-      "fas fa-window-restore"
-    );
-
-    localStorage.removeItem("hibernatedWindows");
-  }
 
   setupEventListeners() {
     // Desktop icon handlers with Windows 11 interactions
@@ -898,7 +253,7 @@ class Windows11Manager {
     // Reset maximize button
     const maximizeBtn = window.querySelector(".window-control.maximize");
     if (maximizeBtn) {
-      maximizeBtn.innerHTML = "🗖"; // Default maximize symbol
+      maximizeBtn.innerHTML = "\u25A1"; // Default maximize symbol
       maximizeBtn.title = "Maximize";
     }
   }
@@ -1568,6 +923,12 @@ class Windows11Manager {
             font-family: 'Segoe UI', sans-serif;
         }
         
+        .account-actions {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
         .power-button {
             width: 32px;
             height: 32px;
@@ -1664,7 +1025,831 @@ class Windows11Manager {
     document.head.appendChild(style);
   }
 
-  toggleStartMenu() {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  minimizeWindow(windowId) {
+    const window = document.getElementById(windowId);
+    if (!window) return;
+
+    // Mark as minimized but keep in activeWindows
+    window.dataset.isMinimized = "true";
+
+    // Animate minimize
+    window.style.animation = "windowMinimize 0.3s ease-out forwards";
+
+    setTimeout(() => {
+      window.classList.remove("active");
+      window.style.animation = "";
+      window.style.transform = "scale(0.1)";
+      window.style.opacity = "0";
+      window.style.pointerEvents = "none";
+
+      // Keep window in activeWindows array but mark as minimized
+      // This way it stays in the taskbar for restoration
+      this.updateTaskbar();
+    }, 300);
+  }
+
+  maximizeWindow(windowId) {
+    const window = document.getElementById(windowId);
+    if (!window) return;
+
+    if (window.classList.contains("maximized")) {
+      // Restore window
+      this.restoreWindow(windowId);
+    } else {
+      // Maximize window
+      this.doMaximizeWindow(windowId);
+    }
+  }
+
+  doMaximizeWindow(windowId) {
+    const window = document.getElementById(windowId);
+    if (!window) return;
+
+    // Only store original dimensions if not already stored
+    if (!window.dataset.originalWidth) {
+      window.dataset.originalWidth = window.style.width || "600px";
+      window.dataset.originalHeight = window.style.height || "400px";
+      window.dataset.originalLeft = window.style.left || "100px";
+      window.dataset.originalTop = window.style.top || "100px";
+    }
+
+    // Maximize
+    window.classList.add("maximized");
+    window.style.width = "100vw";
+    window.style.height = "calc(100vh - 56px)";
+    window.style.left = "0px";
+    window.style.top = "0px";
+    window.style.borderRadius = "0px";
+
+    // Update maximize button symbol
+    const maximizeBtn = window.querySelector(".window-control.maximize");
+    if (maximizeBtn) {
+      maximizeBtn.innerHTML = "\u25A3";
+      maximizeBtn.title = "Restore";
+    }
+  }
+
+  restoreWindow(windowId) {
+    const window = document.getElementById(windowId);
+    if (!window) return;
+
+    // Restore original dimensions
+    window.classList.remove("maximized");
+    window.style.width = window.dataset.originalWidth || "600px";
+    window.style.height = window.dataset.originalHeight || "400px";
+    window.style.left = window.dataset.originalLeft || "100px";
+    window.style.top = window.dataset.originalTop || "100px";
+    window.style.borderRadius = "0px";
+
+    // Update maximize button symbol
+    const maximizeBtn = window.querySelector(".window-control.maximize");
+    if (maximizeBtn) {
+      maximizeBtn.innerHTML = "\u25A1"; // Maximize symbol
+      maximizeBtn.title = "Maximize";
+    }
+  }
+
+  restoreMinimizedWindow(windowId) {
+    const window = document.getElementById(windowId);
+    if (!window) return;
+
+    // Remove minimized state
+    delete window.dataset.isMinimized;
+
+    // Show the window with restore animation
+    window.style.display = "block";
+    window.classList.add("active");
+    window.style.animation = "windowRestore 0.3s ease-out";
+
+    // Reset styles after animation
+    setTimeout(() => {
+      window.style.animation = "";
+      window.style.transform = "";
+      window.style.opacity = "";
+      window.style.pointerEvents = "";
+    }, 300);
+
+    // Bring to front
+    window.style.zIndex = ++this.zIndexCounter;
+    this.addFocusEffect(window);
+    this.updateTaskbar();
+  }
+
+  startClockUpdate() {
+    setInterval(() => this.updateClock(), 1000);
+  }
+}
+
+// power-menu.js — Power menu, system actions, and theme (augments Windows11Manager.prototype)
+
+Windows11Manager.prototype.showPowerOptions = function () {
+    // Close any existing power menu first
+    const existingMenu = document.getElementById("powerMenu");
+    if (existingMenu) {
+      existingMenu.remove();
+    }
+
+    // Create power options menu
+    const powerMenu = document.createElement("div");
+    powerMenu.id = "powerMenu";
+    powerMenu.className = "power-menu";
+    powerMenu.style.cssText = `
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 300px;
+    background: rgba(32, 32, 32, 0.95);
+    backdrop-filter: blur(40px);
+    color: white;
+    border-radius: 12px;
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    z-index: 10002;
+    animation: powerMenuSlide 0.3s ease-out;
+    overflow: hidden;
+`;
+
+    powerMenu.innerHTML = `
+    <div style="padding: 20px;">
+        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.1);">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <i class="fas fa-power-off" style="color: #0078d4; font-size: 20px;"></i>
+                <h3 style="margin: 0; font-size: 16px;">Power Options</h3>
+            </div>
+            <button onclick="windowManager.closePowerMenu()" 
+                    style="background: none; border: none; color: rgba(255,255,255,0.6); cursor: pointer; font-size: 18px; padding: 4px; border-radius: 4px; transition: color 0.2s;"
+                    onmouseover="this.style.color='white'"
+                    onmouseout="this.style.color='rgba(255,255,255,0.6)'">×</button>
+        </div>
+        
+        <div class="power-options-grid">
+            ${this.createPowerOption(
+              "sleep",
+              "fas fa-moon",
+              "Sleep Mode",
+              "Dim the lights and save your session",
+              "#4a90e2"
+            )}
+            ${this.createPowerOption(
+              "restart",
+              "fas fa-redo-alt",
+              "Restart",
+              "Refresh the experience with new animations",
+              "#FFB908"
+            )}
+            ${this.createPowerOption(
+              "shutdown",
+              "fas fa-power-off",
+              "Shut Down",
+              "Clean shutdown with farewell message",
+              ""
+            )}
+            ${this.createPowerOption(
+              "hibernate",
+              "fas fa-pause-circle",
+              "Hibernate",
+              "Freeze current state and minimize all",
+              "#938EDF"
+            )}
+            ${this.createPowerOption(
+              "maintenance",
+              "fas fa-tools",
+              "Maintenance",
+              "Clear cache and optimize performance",
+              "#95a5a6"
+            )}
+            ${this.createPowerOption(
+              "theme",
+              "fas fa-circle-half-stroke",
+              "Toggle Theme",
+              "Switch between light and dark mode",
+              "#0078d4"
+            )}
+        </div>
+        
+        <div style="margin-top: 16px; padding-top: 12px; border-top: 1px solid rgba(255,255,255,0.1); font-size: 12px; opacity: 0.7; text-align: center;">
+            <i class="fas fa-info-circle"></i> Portfolio will remember your session
+        </div>
+    </div>
+`;
+
+    document.body.appendChild(powerMenu);
+
+    // Prevent immediate closing by stopping event propagation
+    powerMenu.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    // Set up click-outside-to-close with a delay
+    setTimeout(() => {
+      const closeHandler = (e) => {
+        if (
+          !powerMenu.contains(e.target) &&
+          !e.target.closest(".start-button")
+        ) {
+          this.closePowerMenu();
+          document.removeEventListener("click", closeHandler);
+        }
+      };
+      document.addEventListener("click", closeHandler);
+    }, 100);
+
+    // Also close with Escape key
+    const escapeHandler = (e) => {
+      if (e.key === "Escape") {
+        this.closePowerMenu();
+        document.removeEventListener("keydown", escapeHandler);
+      }
+    };
+    document.addEventListener("keydown", escapeHandler);
+  };
+
+// Add this method to toggle power menu (for the start menu button)
+Windows11Manager.prototype.togglePowerMenu = function () {
+    const existingMenu = document.getElementById("powerMenu");
+    if (existingMenu) {
+      this.closePowerMenu();
+    } else {
+      this.showPowerOptions();
+    }
+  };
+
+// Create individual power option
+Windows11Manager.prototype.createPowerOption = function (action, icon, title, description, color) {
+    return `
+    <div class="power-option" data-action="${action}" 
+         style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s ease; margin-bottom: 8px;"
+         onmouseover="this.style.background='rgba(255,255,255,0.05)'"
+         onmouseout="this.style.background='transparent'"
+         onclick="windowManager.executePowerAction('${action}');">
+        <div style="width: 40px; height: 40px; background: ${color}; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+            <i class="${icon}" style="color: white; font-size: 18px;"></i>
+        </div>
+        <div style="flex: 1;">
+            <div style="font-weight: 600; margin-bottom: 2px;">${title}</div>
+            <div style="font-size: 12px; opacity: 0.8; line-height: 1.3;">${description}</div>
+        </div>
+    </div>
+`;
+  };
+
+// Execute power actions
+Windows11Manager.prototype.executePowerAction = function (action) {
+    this.closePowerMenu();
+
+    switch (action) {
+      case "sleep":
+        this.sleepMode();
+        break;
+      case "restart":
+        this.restartSystem();
+        break;
+      case "shutdown":
+        this.shutdownSystem();
+        break;
+      case "hibernate":
+        this.hibernateSystem();
+        break;
+      case "demo":
+        this.demoMode();
+        break;
+      case "maintenance":
+        this.maintenanceMode();
+        break;
+      case "theme":
+        this.toggleTheme();
+        break;
+    }
+  };
+
+// Toggle light/dark theme and persist the choice
+Windows11Manager.prototype.toggleTheme = function () {
+    const root = document.documentElement;
+    const current =
+      root.getAttribute("data-theme") === "dark" ? "dark" : "light";
+    const next = current === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try {
+      localStorage.setItem("theme", next);
+    } catch (e) {}
+    const iconClass = next === "dark" ? "fas fa-sun" : "fas fa-moon";
+    document
+      .querySelectorAll(".theme-toggle-button i, #trayThemeToggle i")
+      .forEach((icon) => {
+        icon.className = iconClass;
+      });
+    personalFeatures.showNotification(
+      next === "dark" ? "Dark Mode" : "Light Mode",
+      next === "dark"
+        ? "Switched to the dark theme."
+        : "Switched to the light theme.",
+      next === "dark" ? "fas fa-moon" : "fas fa-sun"
+    );
+  };
+
+// Get time-appropriate greeting
+Windows11Manager.prototype.getTimeBasedGreeting = function () {
+    const hour = new Date().getHours();
+
+    if (hour >= 5 && hour < 12) {
+      return {
+        message: "Good morning!",
+        description: "Portfolio is now awake and ready.",
+      };
+    } else if (hour >= 12 && hour < 17) {
+      return {
+        message: "Good afternoon!",
+        description: "Portfolio is back online.",
+      };
+    } else if (hour >= 17 && hour < 21) {
+      return {
+        message: "Good evening!",
+        description: "Portfolio has resumed activity.",
+      };
+    } else {
+      return {
+        message: "Good night!",
+        description: "Portfolio is active in night mode.",
+      };
+    }
+  };
+
+// Sleep Mode - Dim everything and show screensaver
+Windows11Manager.prototype.sleepMode = function () {
+    personalFeatures.showNotification(
+      "Entering Sleep Mode",
+      "Portfolio is going to sleep. Click anywhere to wake up.",
+      "fas fa-moon"
+    );
+
+    // Dim the entire screen
+    const sleepOverlay = document.createElement("div");
+    sleepOverlay.id = "sleepOverlay";
+    sleepOverlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 15000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    animation: fadeIn 2s ease;
+`;
+
+    sleepOverlay.innerHTML = `
+    <div style="text-align: center; color: white;">
+        <div style="font-size: 48px; margin-bottom: 16px; animation: pulse 2s infinite;"><i class="fas fa-moon"></i></div>
+        <div style="font-size: 24px; margin-bottom: 8px;">Sleep Mode</div>
+        <div style="font-size: 14px; opacity: 0.7;">Click anywhere to wake up</div>
+        <div id="sleepTime" style="font-size: 32px; margin-top: 20px; font-family: monospace;"></div>
+    </div>
+`;
+
+    document.body.appendChild(sleepOverlay);
+
+    // Show current time
+    const updateSleepTime = () => {
+      const timeElement = document.getElementById("sleepTime");
+      if (timeElement) {
+        timeElement.textContent = new Date().toLocaleTimeString();
+      }
+    };
+
+    const sleepInterval = setInterval(updateSleepTime, 1000);
+    updateSleepTime();
+
+    // Wake up on click
+    sleepOverlay.addEventListener("click", () => {
+      clearInterval(sleepInterval);
+      sleepOverlay.remove();
+      const greeting = this.getTimeBasedGreeting();
+      personalFeatures.showNotification(
+        greeting.message,
+        greeting.description,
+        "fas fa-sun"
+      );
+    });
+  };
+
+// Restart - Reload with animation
+Windows11Manager.prototype.restartSystem = function () {
+    personalFeatures.showNotification(
+      "Restarting...",
+      "Portfolio will restart with fresh animations.",
+      "fas fa-redo-alt"
+    );
+
+    // Create restart animation
+    const restartOverlay = document.createElement("div");
+    restartOverlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #0078d4;
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 1s ease;
+`;
+
+    restartOverlay.innerHTML = `
+    <div style="text-align: center; color: white;">
+        <div style="width: 60px; height: 60px; border: 4px solid rgba(255,255,255,0.3); border-top: 4px solid white; border-radius: 50%; animation: spin 1s linear infinite; margin: 0 auto 20px;"></div>
+        <div style="font-size: 24px; margin-bottom: 8px;">Restarting</div>
+        <div style="font-size: 14px; opacity: 0.8;">Please wait...</div>
+    </div>
+`;
+
+    document.body.appendChild(restartOverlay);
+
+    setTimeout(() => {
+      location.reload();
+    }, 3000);
+  };
+
+// Shutdown - Farewell message and blank screen
+Windows11Manager.prototype.shutdownSystem = function () {
+    personalFeatures.showNotification(
+      "Shutting Down...",
+      "Thanks for visiting! See you next time.",
+      "fas fa-power-off"
+    );
+
+    const shutdownOverlay = document.createElement("div");
+    shutdownOverlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(135deg, #1e1e1e 0%, #2d2d30 50%, #1e1e1e 100%);
+    z-index: 20000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    animation: fadeIn 2s ease;
+`;
+
+    shutdownOverlay.innerHTML = `
+    <div style="text-align: center; color: white; animation: fadeInUp 1s ease 2s both; max-width: 600px; padding: 40px;">
+        <div style="margin-bottom: 30px;">
+            <i class="fas fa-user-circle" style="font-size: 64px; color: #0078d4; margin-bottom: 20px;"></i>
+        </div>
+        
+        <div style="font-size: 36px; margin-bottom: 20px; font-weight: 300;">Thanks for exploring my portfolio!</div>
+        
+        <div style="font-size: 18px; opacity: 0.8; margin-bottom: 30px; line-height: 1.6;">
+            I hope you enjoyed discovering my projects, skills, and the interactive Windows 11 experience.<br>
+            Feel free to connect with me for opportunities or collaborations.
+        </div>
+        
+
+        
+        <div style="margin-bottom: 30px;">
+            <div style="font-size: 16px; margin-bottom: 15px; opacity: 0.9;">Connect with me:</div>
+            <div style="display: flex; justify-content: center; gap: 20px; margin-bottom: 20px;">
+                <a href="https://github.com/katekanin" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                    <i class="fab fa-github" style="font-size: 24px;"></i>
+                </a>
+                <a href="https://linkedin.com/in/katekanin" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                    <i class="fab fa-linkedin" style="font-size: 24px;"></i>
+                </a>
+                <a href="https://calendar.app.google/LnkWXbra3MUtCyQM9" target="_blank" style="color: white; text-decoration: none; opacity: 0.8; transition: opacity 0.3s;">
+                    <i class="fas fa-calendar-alt" style="font-size: 24px;"></i>
+                </a>
+            </div>
+        </div>
+        
+        <button onclick="location.reload()" 
+                style="background: linear-gradient(135deg, #0078d4, #106ebe); color: white; border: none; padding: 15px 30px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 500; transition: all 0.3s; box-shadow: 0 4px 15px rgba(0, 120, 212, 0.3);"
+                onmouseover="this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(0, 120, 212, 0.4)'"
+                onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(0, 120, 212, 0.3)'">
+            <i class="fas fa-power-off" style="margin-right: 8px;"></i>
+            Power On Again
+        </button>
+        
+        <div style="margin-top: 30px; font-size: 14px; opacity: 0.5;">
+            <i class="fas fa-heart" style="margin-right: 5px; color: #ff6b6b;"></i>
+            Made with love and JavaScript by Katekani Nyamandi
+        </div>
+    </div>
+`;
+
+    document.body.appendChild(shutdownOverlay);
+  };
+
+// Hibernate - Minimize all windows and show desktop
+Windows11Manager.prototype.hibernateSystem = function () {
+    personalFeatures.showNotification(
+      "Hibernating...",
+      "All windows minimized. State saved for later.",
+      "fas fa-pause-circle"
+    );
+
+    // Store current window states
+    const windowStates = this.activeWindows.map((windowId) => {
+      const window = document.getElementById(windowId);
+      return {
+        id: windowId,
+        left: window.style.left,
+        top: window.style.top,
+        width: window.style.width,
+        height: window.style.height,
+        zIndex: window.style.zIndex,
+      };
+    });
+
+    localStorage.setItem("hibernatedWindows", JSON.stringify(windowStates));
+
+    // Minimize all windows with animation
+    document.querySelectorAll(".window.active").forEach((window, index) => {
+      setTimeout(() => {
+        window.style.animation = "windowMinimize 0.5s ease-out forwards";
+        setTimeout(() => {
+          window.classList.remove("active");
+          window.style.animation = "";
+        }, 500);
+      }, index * 100);
+    });
+
+    this.activeWindows = [];
+    this.updateTaskbar();
+
+    // Add restore button to desktop
+    setTimeout(() => {
+      const restoreButton = document.createElement("button");
+      restoreButton.style.cssText = `
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 120, 212, 0.9);
+        color: white;
+        border: none;
+        padding: 16px 32px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        font-weight: 600;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        animation: pulse 2s infinite;
+    `;
+      restoreButton.innerHTML = '<i class="fas fa-play"></i> Restore Session';
+      restoreButton.onclick = () =>
+        this.restoreHibernatedSession(restoreButton);
+
+      document.body.appendChild(restoreButton);
+    }, 1000);
+  };
+
+// Demo Mode - Auto showcase features
+Windows11Manager.prototype.demoMode = function () {
+    personalFeatures.showNotification(
+      "Demo Mode Activated!",
+      "Sit back and watch the automated showcase.",
+      "fas fa-play-circle"
+    );
+
+    const demoSequence = [
+      () => this.openWindow("about"),
+      () => this.openWindow("projects"),
+      () => this.openWindow("skills"),
+      () => this.openWindow("contact"),
+      () => this.openWindow("personal"),
+      () => this.openWindow("resume"),
+      () => this.showStartMenu(),
+      () => this.closeStartMenu(),
+      () => {
+        // Close all windows
+        [...this.activeWindows].forEach((windowId) => {
+          this.closeWindow(windowId);
+        });
+      },
+    ];
+
+    demoSequence.forEach((action, index) => {
+      setTimeout(action, (index + 1) * 2000);
+    });
+
+    // End demo
+    setTimeout(
+      () => {
+        personalFeatures.showNotification(
+          "Demo Complete!",
+          "Feel free to explore on your own now.",
+          "fas fa-check-circle"
+        );
+      },
+      demoSequence.length * 2000 + 2000
+    );
+  };
+
+// Maintenance Mode - Clear cache and optimize
+Windows11Manager.prototype.maintenanceMode = function () {
+    personalFeatures.showNotification(
+      "Maintenance Mode",
+      "Optimizing performance and clearing cache...",
+      "fas fa-tools"
+    );
+
+    // Clear localStorage
+    const keysToKeep = ["hibernatedWindows"];
+    const allKeys = Object.keys(localStorage);
+    allKeys.forEach((key) => {
+      if (!keysToKeep.includes(key)) {
+        localStorage.removeItem(key);
+      }
+    });
+
+    // Close all windows
+    [...this.activeWindows].forEach((windowId) => {
+      this.closeWindow(windowId);
+    });
+
+    // Reset icon positions
+    document.querySelectorAll(".desktop-icon").forEach((icon) => {
+      icon.style.transform = "";
+      icon.classList.remove("selected");
+    });
+
+    // Show maintenance progress
+    const progressOverlay = document.createElement("div");
+    progressOverlay.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 15000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+`;
+
+    progressOverlay.innerHTML = `
+    <div style="text-align: center; color: white;">
+        <div style="font-size: 48px; margin-bottom: 20px;"><i class="fas fa-tools"></i></div>
+        <div style="font-size: 24px; margin-bottom: 20px;">Maintenance in Progress</div>
+        <div style="width: 300px; height: 4px; background: rgba(255,255,255,0.2); border-radius: 2px; overflow: hidden;">
+            <div id="maintenanceProgress" style="width: 0%; height: 100%; background: #0078d4; border-radius: 2px; transition: width 0.3s ease;"></div>
+        </div>
+        <div id="maintenanceStatus" style="margin-top: 12px; font-size: 14px; opacity: 0.8;">Starting maintenance...</div>
+    </div>
+`;
+
+    document.body.appendChild(progressOverlay);
+
+    const steps = [
+      "Clearing temporary files...",
+      "Optimizing animations...",
+      "Refreshing components...",
+      "Updating cache...",
+      "Finalizing...",
+    ];
+
+    steps.forEach((step, index) => {
+      setTimeout(
+        () => {
+          document.getElementById("maintenanceStatus").textContent = step;
+          document.getElementById("maintenanceProgress").style.width = `${
+            ((index + 1) / steps.length) * 100
+          }%`;
+        },
+        (index + 1) * 800
+      );
+    });
+
+    setTimeout(
+      () => {
+        progressOverlay.remove();
+        personalFeatures.showNotification(
+          "Maintenance Complete!",
+          "Portfolio optimized and ready for peak performance.",
+          "fas fa-check-circle"
+        );
+      },
+      steps.length * 800 + 1000
+    );
+  };
+
+// Close power menu
+Windows11Manager.prototype.closePowerMenu = function () {
+    const powerMenu = document.getElementById("powerMenu");
+    if (powerMenu) {
+      powerMenu.style.animation = "powerMenuSlide 0.3s ease-out reverse";
+      setTimeout(() => powerMenu.remove(), 300);
+    }
+  };
+
+// Restore hibernated session
+Windows11Manager.prototype.restoreHibernatedSession = function (button) {
+    const hibernatedWindows = JSON.parse(
+      localStorage.getItem("hibernatedWindows") || "[]"
+    );
+
+    button.remove();
+
+    hibernatedWindows.forEach((windowState, index) => {
+      setTimeout(() => {
+        this.openWindow(windowState.id);
+        const window = document.getElementById(windowState.id);
+        if (window) {
+          window.style.left = windowState.left;
+          window.style.top = windowState.top;
+          window.style.width = windowState.width;
+          window.style.height = windowState.height;
+          window.style.zIndex = windowState.zIndex;
+        }
+      }, index * 200);
+    });
+
+    const greeting = this.getTimeBasedGreeting();
+    personalFeatures.showNotification(
+      greeting.message,
+      "All your windows are back where you left them.",
+      "fas fa-window-restore"
+    );
+
+    localStorage.removeItem("hibernatedWindows");
+  };
+// start-menu.js — Start menu and search (augments Windows11Manager.prototype)
+
+Windows11Manager.prototype.toggleStartMenu = function () {
     this.isStartMenuOpen = !this.isStartMenuOpen;
 
     if (this.isStartMenuOpen) {
@@ -1672,9 +1857,9 @@ class Windows11Manager {
     } else {
       this.closeStartMenu();
     }
-  }
+  };
 
-  showStartMenu() {
+Windows11Manager.prototype.showStartMenu = function () {
     let startMenu = document.getElementById("startMenu");
     if (!startMenu) {
       startMenu = this.createStartMenu();
@@ -1682,17 +1867,17 @@ class Windows11Manager {
 
     startMenu.classList.add("active");
     this.isStartMenuOpen = true;
-  }
+  };
 
-  closeStartMenu() {
+Windows11Manager.prototype.closeStartMenu = function () {
     const startMenu = document.getElementById("startMenu");
     if (startMenu) {
       startMenu.classList.remove("active");
     }
     this.isStartMenuOpen = false;
-  }
+  };
 
-  createStartMenu() {
+Windows11Manager.prototype.createStartMenu = function () {
     const startMenu = document.createElement("div");
     startMenu.id = "startMenu";
     startMenu.className = "start-menu";
@@ -1747,9 +1932,14 @@ class Windows11Manager {
                     <img src="./icons/avatar.jpg" class="account-avatar" alt="User">
                     <span class="account-name">Katekani Nyamandi</span>
                 </div>
-                <button class="power-button" onclick="event.stopPropagation(); windowManager.togglePowerMenu()">
-                    <i class="fas fa-power-off"></i>
-                </button>
+                <div class="account-actions">
+                    <button class="power-button theme-toggle-button" title="Toggle light/dark theme" aria-label="Toggle light/dark theme" onclick="event.stopPropagation(); windowManager.toggleTheme()">
+                        <i class="fas ${document.documentElement.getAttribute("data-theme") === "dark" ? "fa-sun" : "fa-moon"}"></i>
+                    </button>
+                    <button class="power-button" title="Power" aria-label="Power" onclick="event.stopPropagation(); windowManager.togglePowerMenu()">
+                        <i class="fas fa-power-off"></i>
+                    </button>
+                </div>
             </div>
         </div>
     `;
@@ -1767,9 +1957,9 @@ class Windows11Manager {
     this.setupStartMenuSearch();
 
     return startMenu;
-  }
+  };
 
-  createPinnedApps() {
+Windows11Manager.prototype.createPinnedApps = function () {
     const apps = [
       { icon: "home", label: "About", window: "about" },
       {
@@ -1785,12 +1975,19 @@ class Windows11Manager {
         window: "personal",
       },
       { icon: "folder", label: "Resume", window: "resume" },
-      { icon: "kate", label: "Chatbot", window: "flowChat" },
       {
         icon: "fun-room",
         label: "Games",
         window: "games",
         isFontAwesome: true,
+        faIcon: "fa-gamepad",
+      },
+      {
+        icon: "terminal",
+        label: "Terminal",
+        window: "terminal",
+        isFontAwesome: true,
+        faIcon: "fa-terminal",
       },
     ];
 
@@ -1801,7 +1998,7 @@ class Windows11Manager {
           : `windowManager.openWindow('${app.window}'); windowManager.closeStartMenu();`;
 
         const iconHtml = app.isFontAwesome
-          ? `<i class="fa-solid fa-gamepad" style="color: #2C7EBD; font-size: 24px;"></i>`
+          ? `<i class="fa-solid ${app.faIcon || "fa-gamepad"}" style="color: #2C7EBD; font-size: 24px;"></i>`
           : `<img src="./icons/${app.icon}.png" alt="${app.label}">`;
 
         return `
@@ -1814,9 +2011,9 @@ class Windows11Manager {
     `;
       })
       .join("");
-  }
+  };
 
-  createWindowsRecommendedItems() {
+Windows11Manager.prototype.createWindowsRecommendedItems = function () {
     const items = [
       {
         icon: "folder",
@@ -1831,13 +2028,6 @@ class Windows11Manager {
         subtitle: "Recently accessed",
         time: "Today",
         action: "window.open('https://github.com/KatekaniN', '_blank')",
-      },
-      {
-        icon: "kate",
-        title: "Chatbot",
-        subtitle: "Tap through Kate's journey",
-        time: "Today",
-        action: "openWindow('flowChat')",
       },
       {
         icon: "email",
@@ -1864,97 +2054,9 @@ class Windows11Manager {
     `
       )
       .join("");
-  }
+  };
 
-  createStartMenuItems(f) {
-    const items = [
-      { icon: "home", label: "About", window: "about", color: "#0078d4" },
-      {
-        icon: "terminal",
-        label: "Projects",
-        window: "projects",
-        color: "#107c10",
-      },
-      { icon: "settings", label: "Skills", window: "skills", color: "#ff8c00" },
-      { icon: "email", label: "Contact", window: "contact", color: "#d13438" },
-      {
-        icon: "name-tag/icons8-name-tag-96",
-        label: "Personal",
-        window: "personal",
-        color: "#8764b8",
-      },
-      { icon: "folder", label: "Resume", window: "resume", color: "#ca5010" },
-    ];
-
-    return items
-      .map(
-        (item) => `
-        <div onclick="windowManager.openWindow('${item.window}'); windowManager.closeStartMenu();" 
-             style="display: flex; flex-direction: column; align-items: center; padding: 16px 12px; border-radius: 8px; cursor: pointer; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); transition: all 0.2s ease; position: relative; overflow: hidden;"
-             onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 8px 25px rgba(0,0,0,0.15)'"
-             onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateY(0px)'; this.style.boxShadow='none'">
-            <div style="width: 48px; height: 48px; border-radius: 8px; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; background: linear-gradient(135deg, ${item.color}20, ${item.color}40); border: 1px solid ${item.color}30;">
-                <img src="./icons/${item.icon}.png" alt="${item.label} icon" style="width: 24px; height: 24px; filter: brightness(1.1);">
-            </div>
-            <span style="font-size: 12px; text-align: center; font-weight: 500;">${item.label}</span>
-        </div>
-    `
-      )
-      .join("");
-  }
-
-  createRecommendedItems() {
-    const items = [
-      {
-        icon: "fas fa-file-pdf",
-        title: "Resume PDF",
-        description: "Download my latest resume",
-        action: "downloadResume",
-      },
-      {
-        icon: "fas fa-code",
-        title: "Latest Projects",
-        description: "View my recent development work",
-        action: "window.open('https://github.com/KatekaniN', '_blank')",
-      },
-      {
-        icon: "fas fa-envelope",
-        title: "Contact Information",
-        description: "Get in touch for opportunities",
-        action: "openWindow('contact')",
-      },
-      {
-        icon: "fas fa-route",
-        title: "My Development Journey",
-        description: "Read about my transition into tech",
-        action: "openWindow('personal')",
-      },
-    ];
-
-    return items
-      .map(
-        (item) => `
-        <div onclick="windowManager.handleRecommendedAction(\`${item.action}\`)" 
-             style="display: flex; align-items: center; gap: 12px; padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08);"
-             onmouseover="this.style.background='rgba(255,255,255,0.1)'; this.style.transform='translateX(2px)'"
-             onmouseout="this.style.background='rgba(255,255,255,0.03)'; this.style.transform='translateX(0px)'">
-            <div style="width: 36px; height: 36px; background: rgba(0,120,212,0.2); border-radius: 8px; display: flex; align-items: center; justify-content: center;">
-                <i class="${item.icon}" style="font-size: 16px; color: #0078d4;"></i>
-            </div>
-            <div style="flex: 1;">
-                <div style="font-weight: 600; font-size: 14px; margin-bottom: 2px;">${item.title}</div>
-                <div style="font-size: 12px; opacity: 0.7; line-height: 1.3;">${item.description}</div>
-            </div>
-            <div style="opacity: 0.4; transition: opacity 0.2s;">
-                <i class="fas fa-chevron-right"></i>
-            </div>
-        </div>
-    `
-      )
-      .join("");
-  }
-
-  handleRecommendedAction(action) {
+Windows11Manager.prototype.handleRecommendedAction = function (action) {
     // Close the start menu first
     this.closeStartMenu();
 
@@ -1970,7 +2072,7 @@ class Windows11Manager {
       // Show notification
       setTimeout(() => {
         personalFeatures.showNotification(
-          "Resume Downloaded! 📄",
+          "Resume Downloaded!",
           "Katekani's resume has been downloaded to your device.",
           "fas fa-download"
         );
@@ -1998,9 +2100,9 @@ class Windows11Manager {
     } else {
       // Unknown action - silently ignore
     }
-  }
+  };
 
-  setupStartMenuSearch() {
+Windows11Manager.prototype.setupStartMenuSearch = function () {
     const searchInput = document.getElementById("startMenuSearch");
     const searchResults = document.getElementById("searchResults");
     const searchSuggestions = document.getElementById("searchSuggestions");
@@ -2071,9 +2173,9 @@ class Windows11Manager {
         searchInput.focus();
       }
     }, 150);
-  }
+  };
 
-  updateResultSelection(resultItems, selectedIndex) {
+Windows11Manager.prototype.updateResultSelection = function (resultItems, selectedIndex) {
     resultItems.forEach((item, index) => {
       if (index === selectedIndex) {
         item.style.background = "rgba(0, 120, 212, 0.3)";
@@ -2084,17 +2186,17 @@ class Windows11Manager {
         item.style.transform = "translateX(0px)";
       }
     });
-  }
+  };
 
-  performSearch(query) {
+Windows11Manager.prototype.performSearch = function (query) {
     const searchResults = document.getElementById("searchResults");
     if (!searchResults) return;
 
     const results = this.searchWindowContent(query);
     this.displaySearchResults(results, query);
-  }
+  };
 
-  searchWindowContent(query) {
+Windows11Manager.prototype.searchWindowContent = function (query) {
     const results = [];
     const queryLower = query.toLowerCase();
 
@@ -2173,9 +2275,9 @@ class Windows11Manager {
     results.sort((a, b) => b.score - a.score);
 
     return results;
-  }
+  };
 
-  findContextMatches(text, query) {
+Windows11Manager.prototype.findContextMatches = function (text, query) {
     const matches = [];
     const textLower = text.toLowerCase();
     const contextLength = 80; // Characters before and after match
@@ -2215,9 +2317,9 @@ class Windows11Manager {
     }
 
     return matches;
-  }
+  };
 
-  calculateRelevanceScore(content, query, title) {
+Windows11Manager.prototype.calculateRelevanceScore = function (content, query, title) {
     let score = 0;
     const contentLower = content.toLowerCase();
     const titleLower = title.toLowerCase();
@@ -2239,9 +2341,9 @@ class Windows11Manager {
     score += exactMatches * 20;
 
     return score;
-  }
+  };
 
-  displaySearchResults(results, query) {
+Windows11Manager.prototype.displaySearchResults = function (results, query) {
     const searchResults = document.getElementById("searchResults");
     if (!searchResults) return;
 
@@ -2265,9 +2367,9 @@ class Windows11Manager {
         ${results.map((result) => this.createWindowsSearchResultItem(result, query)).join("")}
       </div>
     `;
-  }
+  };
 
-  createWindowsSearchResultItem(result, query) {
+Windows11Manager.prototype.createWindowsSearchResultItem = function (result, query) {
     const primaryMatch = result.matches[0];
     const highlightedContext = this.highlightMatch(
       primaryMatch.context,
@@ -2307,66 +2409,23 @@ class Windows11Manager {
         </div>
       </div>
     `;
-  }
+  };
 
-  createSearchResultItem(result, query) {
-    const primaryMatch = result.matches[0];
-    const highlightedContext = this.highlightMatch(
-      primaryMatch.context,
-      query,
-      primaryMatch.matchStart,
-      primaryMatch.matchEnd
-    );
-
-    return `
-      <div class="search-result-item" 
-           onclick="windowManager.openWindowFromSearch('${result.windowId}'); windowManager.closeStartMenu();"
-           style="padding: 12px; border-radius: 8px; cursor: pointer; transition: all 0.2s; margin-bottom: 8px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);"
-           onmouseover="this.style.background='rgba(255,255,255,0.15)'; this.style.transform='translateX(4px)'"
-           onmouseout="this.style.background='rgba(255,255,255,0.05)'; this.style.transform='translateX(0px)'">
-        <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 8px;">
-          <div style="width: 32px; height: 32px; background: rgba(0,120,212,0.2); border-radius: 6px; display: flex; align-items: center; justify-content: center;">
-            <i class="${result.icon}" style="color: #0078d4; font-size: 14px;"></i>
-          </div>
-          <div style="flex: 1;">
-            <div style="font-weight: 600; font-size: 14px;">${result.title}</div>
-            <div style="font-size: 12px; opacity: 0.7;">${result.matches.length} match${result.matches.length !== 1 ? "es" : ""} found</div>
-          </div>
-          <div style="opacity: 0.4;">
-            <i class="fas fa-external-link-alt" style="font-size: 12px;"></i>
-          </div>
-        </div>
-        <div style="font-size: 13px; line-height: 1.4; opacity: 0.9;">
-          ${highlightedContext}
-        </div>
-        ${
-          result.matches.length > 1
-            ? `
-          <div style="font-size: 11px; opacity: 0.6; margin-top: 6px;">
-            +${result.matches.length - 1} more match${result.matches.length - 1 !== 1 ? "es" : ""}
-          </div>
-        `
-            : ""
-        }
-      </div>
-    `;
-  }
-
-  highlightMatch(context, query, matchStart, matchEnd) {
+Windows11Manager.prototype.highlightMatch = function (context, query, matchStart, matchEnd) {
     const before = context.substring(0, matchStart);
     const match = context.substring(matchStart, matchEnd);
     const after = context.substring(matchEnd);
 
     return `${this.escapeHtml(before)}<span style="background: rgba(96, 205, 255, 0.25); color: #60cdff; padding: 1px 3px; border-radius: 2px; font-weight: 600;">${this.escapeHtml(match)}</span>${this.escapeHtml(after)}`;
-  }
+  };
 
-  escapeHtml(text) {
+Windows11Manager.prototype.escapeHtml = function (text) {
     const div = document.createElement("div");
     div.textContent = text;
     return div.innerHTML;
-  }
+  };
 
-  openWindowFromSearch(windowId) {
+Windows11Manager.prototype.openWindowFromSearch = function (windowId) {
     // Close search results
     const searchInput = document.getElementById("startMenuSearch");
     const searchResults = document.getElementById("searchResults");
@@ -2381,9 +2440,9 @@ class Windows11Manager {
 
     // Open the window
     this.openWindow(windowId);
-  }
+  };
 
-  getWindowTitle(windowId) {
+Windows11Manager.prototype.getWindowTitle = function (windowId) {
     const titles = {
       about: "About Me",
       projects: "Projects",
@@ -2394,9 +2453,10 @@ class Windows11Manager {
       games: "Games",
     };
     return titles[windowId] || windowId;
-  }
+  };
+// notifications.js — Notification center, calendar, and clock (augments Windows11Manager.prototype)
 
-  updateStartMenuTime() {
+Windows11Manager.prototype.updateStartMenuTime = function () {
     const timeElement = document.getElementById("startMenuTime");
     const dateElement = document.getElementById("startMenuDate");
 
@@ -2413,9 +2473,9 @@ class Windows11Manager {
         day: "numeric",
       });
     }
-  }
+  };
 
-  updateClock() {
+Windows11Manager.prototype.updateClock = function () {
     const now = new Date();
     const timeString = now.toLocaleTimeString([], {
       hour: "2-digit",
@@ -2439,9 +2499,9 @@ class Windows11Manager {
       clockElement.onclick = () => this.toggleNotificationCenter();
       clockElement.style.cursor = "pointer";
     }
-  }
+  };
 
-  toggleNotificationCenter() {
+Windows11Manager.prototype.toggleNotificationCenter = function () {
     const existingCenter = document.getElementById("notificationCenter");
     if (existingCenter) {
       existingCenter.remove();
@@ -2449,9 +2509,9 @@ class Windows11Manager {
     }
 
     this.createNotificationCenter();
-  }
+  };
 
-  createNotificationCenter() {
+Windows11Manager.prototype.createNotificationCenter = function () {
     const now = new Date();
     this.currentCalendarDate = this.currentCalendarDate || new Date();
 
@@ -2513,9 +2573,9 @@ class Windows11Manager {
         { once: true }
       );
     }, 100);
-  }
+  };
 
-  createCalendarGrid() {
+Windows11Manager.prototype.createCalendarGrid = function () {
     const now = new Date();
     const calendarDate = this.currentCalendarDate || now;
     const year = calendarDate.getFullYear();
@@ -2591,9 +2651,9 @@ class Windows11Manager {
 
     calendar += "</div>";
     return calendar;
-  }
+  };
 
-  changeCalendarMonth(direction) {
+Windows11Manager.prototype.changeCalendarMonth = function (direction) {
     if (!this.currentCalendarDate) {
       this.currentCalendarDate = new Date();
     }
@@ -2616,9 +2676,9 @@ class Windows11Manager {
         <div class="calendar-month">${this.currentCalendarDate.toLocaleDateString([], { month: "long", year: "numeric" })}</div>
       `;
     }
-  }
+  };
 
-  selectCalendarDay(year, month, day) {
+Windows11Manager.prototype.selectCalendarDay = function (year, month, day) {
     // Store the selected date
     this.selectedCalendarDate = new Date(year, month, day);
 
@@ -2632,9 +2692,9 @@ class Windows11Manager {
         centerContent.innerHTML = this.createNotificationCenter();
       }
     }
-  }
+  };
 
-  clearAllNotifications() {
+Windows11Manager.prototype.clearAllNotifications = function () {
     if (this.notificationHistory.length === 0) {
       return; // No notifications to clear
     }
@@ -2648,9 +2708,9 @@ class Windows11Manager {
     if (notificationContent) {
       notificationContent.innerHTML = this.renderNotificationHistory();
     }
-  }
+  };
 
-  dismissNotification(notificationId) {
+Windows11Manager.prototype.dismissNotification = function (notificationId) {
     // Convert to string for consistent comparison
     const targetId = notificationId.toString();
 
@@ -2690,9 +2750,9 @@ class Windows11Manager {
         notificationContent.innerHTML = this.renderNotificationHistory();
       }
     }
-  }
+  };
 
-  addToNotificationHistory(title, body, icon) {
+Windows11Manager.prototype.addToNotificationHistory = function (title, body, icon) {
     const notification = {
       id: Date.now(),
       title,
@@ -2719,9 +2779,9 @@ class Windows11Manager {
     if (notificationContent) {
       notificationContent.innerHTML = this.renderNotificationHistory();
     }
-  }
+  };
 
-  renderNotificationHistory() {
+Windows11Manager.prototype.renderNotificationHistory = function () {
     if (this.notificationHistory.length === 0) {
       return `
         <div class="no-notifications">
@@ -2759,9 +2819,9 @@ class Windows11Manager {
       `;
       })
       .join("");
-  }
+  };
 
-  getNotificationIcon(iconClass) {
+Windows11Manager.prototype.getNotificationIcon = function (iconClass) {
     // Map Font Awesome icons to appropriate images
     const iconMap = {
       "fas fa-download":
@@ -2780,9 +2840,9 @@ class Windows11Manager {
       iconMap[iconClass] ||
       '<img src="./icons/folder.png" alt="notification" style="width: 24px; height: 24px;">'
     );
-  }
+  };
 
-  getTimeAgo(timestamp) {
+Windows11Manager.prototype.getTimeAgo = function (timestamp) {
     const now = new Date();
     const diff = now - timestamp;
     const minutes = Math.floor(diff / 60000);
@@ -2793,9 +2853,9 @@ class Windows11Manager {
     if (minutes < 60) return `${minutes}m ago`;
     if (hours < 24) return `${hours}h ago`;
     return `${days}d ago`;
-  }
+  };
 
-  markNotificationAsRead(notificationId) {
+Windows11Manager.prototype.markNotificationAsRead = function (notificationId) {
     const notification = this.notificationHistory.find(
       (n) => n.id.toString() === notificationId
     );
@@ -2810,123 +2870,506 @@ class Windows11Manager {
         notificationContent.innerHTML = this.renderNotificationHistory();
       }
     }
+  };
+/* Portfolio Terminal — a real interactive console that replaces the old chatbot.
+ * Type `help` to list commands. Commands surface portfolio info and can open
+ * other windows or switch the theme. No external dependencies beyond the global
+ * `windowManager`. Instantiated once by bootstrap.js after DOMContentLoaded. */
+
+class PortfolioTerminal {
+  constructor() {
+    this.outputEl = document.getElementById("terminalOutput");
+    this.inputEl = document.getElementById("terminalInput");
+    if (!this.outputEl || !this.inputEl) {
+      return;
+    }
+
+    this.history = [];
+    this.historyIndex = -1;
+    this.commands = this.buildCommands();
+
+    this.inputEl.addEventListener("keydown", (e) => this.handleKey(e));
+
+    this.printBanner();
   }
 
-  minimizeWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
-
-    // Mark as minimized but keep in activeWindows
-    window.dataset.isMinimized = "true";
-
-    // Animate minimize
-    window.style.animation = "windowMinimize 0.3s ease-out forwards";
-
-    setTimeout(() => {
-      window.classList.remove("active");
-      window.style.animation = "";
-      window.style.transform = "scale(0.1)";
-      window.style.opacity = "0";
-      window.style.pointerEvents = "none";
-
-      // Keep window in activeWindows array but mark as minimized
-      // This way it stays in the taskbar for restoration
-      this.updateTaskbar();
-    }, 300);
+  // ---- escaping ----------------------------------------------------------
+  escapeHtml(text) {
+    return String(text)
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;")
+      .replace(/'/g, "&#39;");
   }
 
-  maximizeWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
+  // ---- output ------------------------------------------------------------
+  print(html, className) {
+    const line = document.createElement("div");
+    line.className = "terminal-line" + (className ? " " + className : "");
+    line.innerHTML = html;
+    this.outputEl.appendChild(line);
+    this.scrollToBottom();
+  }
 
-    if (window.classList.contains("maximized")) {
-      // Restore window
-      this.restoreWindow(windowId);
+  printLines(lines) {
+    lines.forEach((entry) => {
+      if (typeof entry === "string") {
+        this.print(entry);
+      } else {
+        this.print(entry.text, entry.class);
+      }
+    });
+  }
+
+  spacer() {
+    this.print("", "term-spacer");
+  }
+
+  scrollToBottom() {
+    this.outputEl.scrollTop = this.outputEl.scrollHeight;
+  }
+
+  // ---- banner ------------------------------------------------------------
+  printBanner() {
+    this.printLines([
+      { text: "Katekani OS [Version 11.0]", class: "term-accent" },
+      {
+        text: "(c) Katekani Nyamandi. All rights reserved.",
+        class: "term-muted",
+      },
+      { text: "", class: "term-spacer" },
+      {
+        text:
+          'Type <span class="term-strong">help</span> to see available commands.',
+        class: "term-muted",
+      },
+      { text: "", class: "term-spacer" },
+    ]);
+  }
+
+  // ---- input handling ----------------------------------------------------
+  handleKey(e) {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      this.runLine(this.inputEl.value);
+      this.inputEl.value = "";
+      this.historyIndex = this.history.length;
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      this.recallHistory(-1);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      this.recallHistory(1);
+    } else if (e.key === "l" && e.ctrlKey) {
+      e.preventDefault();
+      this.clear();
+    }
+  }
+
+  recallHistory(direction) {
+    if (!this.history.length) {
+      return;
+    }
+    this.historyIndex = Math.min(
+      Math.max(this.historyIndex + direction, 0),
+      this.history.length
+    );
+    this.inputEl.value = this.history[this.historyIndex] || "";
+    // Move caret to end.
+    const len = this.inputEl.value.length;
+    requestAnimationFrame(() => this.inputEl.setSelectionRange(len, len));
+  }
+
+  runLine(raw) {
+    const input = raw.trim();
+    // Echo the prompt + command.
+    this.print(
+      '<span class="term-prompt-echo">visitor@katekani:~$</span> ' +
+        this.escapeHtml(raw),
+      "terminal-echo"
+    );
+
+    if (!input) {
+      return;
+    }
+
+    this.history.push(input);
+
+    const [name, ...args] = input.split(/\s+/);
+    const command = this.commands[name.toLowerCase()];
+    if (command) {
+      command.run(args);
     } else {
-      // Maximize window
-      this.doMaximizeWindow(windowId);
+      this.print(
+        "Command not found: " +
+          this.escapeHtml(name) +
+          '. Type <span class="term-strong">help</span> for a list of commands.',
+        "term-error"
+      );
     }
+    this.spacer();
   }
 
-  doMaximizeWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
-
-    // Only store original dimensions if not already stored
-    if (!window.dataset.originalWidth) {
-      window.dataset.originalWidth = window.style.width || "600px";
-      window.dataset.originalHeight = window.style.height || "400px";
-      window.dataset.originalLeft = window.style.left || "100px";
-      window.dataset.originalTop = window.style.top || "100px";
-    }
-
-    // Maximize
-    window.classList.add("maximized");
-    window.style.width = "100vw";
-    window.style.height = "calc(100vh - 56px)";
-    window.style.left = "0px";
-    window.style.top = "0px";
-    window.style.borderRadius = "0px";
-
-    // Update maximize button symbol
-    const maximizeBtn = window.querySelector(".window-control.maximize");
-    if (maximizeBtn) {
-      maximizeBtn.innerHTML = "🗗";
-      maximizeBtn.title = "Restore";
-    }
+  clear() {
+    this.outputEl.innerHTML = "";
   }
 
-  restoreWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
-
-    // Restore original dimensions
-    window.classList.remove("maximized");
-    window.style.width = window.dataset.originalWidth || "600px";
-    window.style.height = window.dataset.originalHeight || "400px";
-    window.style.left = window.dataset.originalLeft || "100px";
-    window.style.top = window.dataset.originalTop || "100px";
-    window.style.borderRadius = "0px";
-
-    // Update maximize button symbol
-    const maximizeBtn = window.querySelector(".window-control.maximize");
-    if (maximizeBtn) {
-      maximizeBtn.innerHTML = "🗖"; // Maximize symbol
-      maximizeBtn.title = "Maximize";
+  // ---- helpers -----------------------------------------------------------
+  openWindow(id) {
+    if (typeof windowManager !== "undefined" && windowManager.openWindow) {
+      windowManager.openWindow(id);
+      return true;
     }
+    return false;
   }
 
-  restoreMinimizedWindow(windowId) {
-    const window = document.getElementById(windowId);
-    if (!window) return;
+  // ---- command table -----------------------------------------------------
+  buildCommands() {
+    const windows = {
+      about: "About",
+      projects: "Projects",
+      skills: "Skills",
+      contact: "Contact",
+      personal: "Personal",
+      resume: "Resume",
+      games: "Games",
+      terminal: "Terminal",
+    };
 
-    // Remove minimized state
-    delete window.dataset.isMinimized;
+    return {
+      help: {
+        desc: "List all available commands",
+        run: () => {
+          this.print("Available commands:", "term-strong");
+          this.spacer();
+          const order = [
+            "about",
+            "skills",
+            "projects",
+            "experience",
+            "contact",
+            "social",
+            "resume",
+            "open",
+            "theme",
+            "neofetch",
+            "ls",
+            "echo",
+            "date",
+            "whoami",
+            "history",
+            "clear",
+            "help",
+          ];
+          order.forEach((key) => {
+            const cmd = this.commands[key];
+            if (!cmd) {
+              return;
+            }
+            const label = key.padEnd(12, " ").replace(/ /g, "&nbsp;");
+            this.print(
+              '<span class="term-accent">' +
+                label +
+                "</span> " +
+                cmd.desc,
+              "term-muted"
+            );
+          });
+        },
+      },
 
-    // Show the window with restore animation
-    window.style.display = "block";
-    window.classList.add("active");
-    window.style.animation = "windowRestore 0.3s ease-out";
+      about: {
+        desc: "Who is Katekani?",
+        run: () => {
+          this.printLines([
+            { text: "Katekani Nyamandi", class: "term-strong" },
+            { text: "Junior Full Stack Developer", class: "term-accent" },
+            { text: "", class: "term-spacer" },
+            "Former Mathematical Statistics student at the University of",
+            "Pretoria who discovered coding and never looked back. Loves",
+            "building things people can see and interact with.",
+            { text: "", class: "term-spacer" },
+            {
+              text: 'Run <span class="term-strong">open about</span> for the full story.',
+              class: "term-muted",
+            },
+          ]);
+        },
+      },
 
-    // Reset styles after animation
-    setTimeout(() => {
-      window.style.animation = "";
-      window.style.transform = "";
-      window.style.opacity = "";
-      window.style.pointerEvents = "";
-    }, 300);
+      skills: {
+        desc: "Tech stack and tools",
+        run: () => {
+          this.printLines([
+            { text: "Frontend", class: "term-strong" },
+            "  React, Next.js, JavaScript, HTML, CSS",
+            { text: "Backend", class: "term-strong" },
+            "  Node.js, Express, REST & GraphQL APIs",
+            { text: "Data", class: "term-strong" },
+            "  PostgreSQL",
+            { text: "Mobile", class: "term-strong" },
+            "  React Native",
+            { text: "Exploring", class: "term-strong" },
+            "  Java, building & using LLMs (ChatGPT, Gemini Vision)",
+            { text: "", class: "term-spacer" },
+            {
+              text: 'Run <span class="term-strong">open skills</span> for the full breakdown.',
+              class: "term-muted",
+            },
+          ]);
+        },
+      },
 
-    // Bring to front
-    window.style.zIndex = ++this.zIndexCounter;
-    this.addFocusEffect(window);
-    this.updateTaskbar();
-  }
+      projects: {
+        desc: "Selected projects",
+        run: () => {
+          this.printLines([
+            "A collection of full stack and mobile builds, from web apps",
+            "to a self-taught React Native plant care app.",
+            { text: "", class: "term-spacer" },
+            {
+              text: 'Run <span class="term-strong">open projects</span> to browse them.',
+              class: "term-muted",
+            },
+          ]);
+          this.openWindow("projects");
+        },
+      },
 
-  startClockUpdate() {
-    setInterval(() => this.updateClock(), 1000);
+      experience: {
+        desc: "Career journey",
+        run: () => {
+          this.printLines([
+            "From Mathematical Statistics to full stack development,",
+            "a self-taught journey driven by a love of building.",
+            { text: "", class: "term-spacer" },
+            {
+              text: 'Run <span class="term-strong">open personal</span> for the timeline.',
+              class: "term-muted",
+            },
+          ]);
+        },
+      },
+
+      contact: {
+        desc: "Get in touch",
+        run: () => {
+          this.printLines([
+            {
+              text:
+                "Email     " +
+                '<a href="mailto:knyamandi99@gmail.com">knyamandi99@gmail.com</a>',
+            },
+            {
+              text:
+                "GitHub    " +
+                '<a href="https://github.com/KatekaniN" target="_blank" rel="noopener noreferrer">github.com/KatekaniN</a>',
+            },
+            {
+              text:
+                "LinkedIn  " +
+                '<a href="https://www.linkedin.com/in/katekanin" target="_blank" rel="noopener noreferrer">linkedin.com/in/katekanin</a>',
+            },
+            { text: "", class: "term-spacer" },
+            {
+              text: 'Run <span class="term-strong">open contact</span> to send a message.',
+              class: "term-muted",
+            },
+          ]);
+          this.openWindow("contact");
+        },
+      },
+
+      social: {
+        desc: "Social links",
+        run: () => {
+          this.printLines([
+            {
+              text:
+                "GitHub    " +
+                '<a href="https://github.com/KatekaniN" target="_blank" rel="noopener noreferrer">github.com/KatekaniN</a>',
+            },
+            {
+              text:
+                "LinkedIn  " +
+                '<a href="https://www.linkedin.com/in/katekanin" target="_blank" rel="noopener noreferrer">linkedin.com/in/katekanin</a>',
+            },
+          ]);
+        },
+      },
+
+      resume: {
+        desc: "Open the resume",
+        run: () => {
+          this.print("Opening resume...", "term-muted");
+          this.openWindow("resume");
+        },
+      },
+
+      open: {
+        desc: "open <app> - launch a window",
+        run: (args) => {
+          const target = (args[0] || "").toLowerCase();
+          if (!target) {
+            this.print(
+              "Usage: open &lt;app&gt; - try: " +
+                Object.keys(windows).join(", "),
+              "term-muted"
+            );
+            return;
+          }
+          if (!windows[target]) {
+            this.print(
+              "Unknown app: " + this.escapeHtml(target) + ".",
+              "term-error"
+            );
+            this.print(
+              "Available: " + Object.keys(windows).join(", "),
+              "term-muted"
+            );
+            return;
+          }
+          if (this.openWindow(target)) {
+            this.print(
+              "Launching " + windows[target] + "...",
+              "term-success"
+            );
+          } else {
+            this.print("Window manager not ready.", "term-error");
+          }
+        },
+      },
+
+      theme: {
+        desc: "theme [dark|light] - switch the theme",
+        run: (args) => {
+          const mode = (args[0] || "toggle").toLowerCase();
+          const root = document.documentElement;
+          const current = root.getAttribute("data-theme") || "light";
+          let wantDark;
+          if (mode === "dark") {
+            wantDark = true;
+          } else if (mode === "light") {
+            wantDark = false;
+          } else if (mode === "toggle") {
+            wantDark = current !== "dark";
+          } else {
+            this.print(
+              "Usage: theme [dark|light|toggle]",
+              "term-muted"
+            );
+            return;
+          }
+          const isDark = current === "dark";
+          if (
+            wantDark !== isDark &&
+            typeof windowManager !== "undefined" &&
+            windowManager.toggleTheme
+          ) {
+            windowManager.toggleTheme();
+          }
+          this.print(
+            "Theme set to " + (wantDark ? "dark" : "light") + ".",
+            "term-success"
+          );
+        },
+      },
+
+      neofetch: {
+        desc: "System info",
+        run: () => {
+          const theme =
+            document.documentElement.getAttribute("data-theme") || "light";
+          this.printLines([
+            { text: "visitor@katekani", class: "term-accent" },
+            { text: "-----------------", class: "term-muted" },
+            { text: 'OS        Katekani OS 11.0' },
+            { text: "Host      Portfolio Desktop" },
+            { text: "Shell     katsh 1.0" },
+            { text: "Theme     " + theme },
+            { text: "Stack     React · Next.js · Node.js · PostgreSQL" },
+            { text: "Uptime    always online" },
+          ]);
+        },
+      },
+
+      ls: {
+        desc: "List sections",
+        run: () => {
+          this.print(
+            Object.keys(windows)
+              .map((k) => '<span class="term-accent">' + k + "</span>")
+              .join("&nbsp;&nbsp;")
+          );
+        },
+      },
+
+      echo: {
+        desc: "echo <text> - print text",
+        run: (args) => {
+          this.print(this.escapeHtml(args.join(" ")));
+        },
+      },
+
+      date: {
+        desc: "Current date and time",
+        run: () => {
+          this.print(new Date().toString());
+        },
+      },
+
+      whoami: {
+        desc: "Print the current user",
+        run: () => {
+          this.print("visitor");
+        },
+      },
+
+      history: {
+        desc: "Show command history",
+        run: () => {
+          if (!this.history.length) {
+            this.print("No history yet.", "term-muted");
+            return;
+          }
+          this.history.forEach((cmd, i) => {
+            this.print(
+              '<span class="term-muted">' +
+                String(i + 1).padStart(3, " ").replace(/ /g, "&nbsp;") +
+                "</span>&nbsp;&nbsp;" +
+                this.escapeHtml(cmd)
+            );
+          });
+        },
+      },
+
+      clear: {
+        desc: "Clear the screen",
+        run: () => {
+          this.clear();
+        },
+      },
+
+      cls: {
+        desc: "Clear the screen",
+        run: () => {
+          this.clear();
+        },
+      },
+
+      sudo: {
+        desc: "Superuser do",
+        run: () => {
+          this.print(
+            "Nice try. You already have everything you need here.",
+            "term-warning"
+          );
+        },
+      },
+    };
   }
 }
-
 // Enhanced Personal Features for Windows 11
 class Windows11PersonalFeatures {
   constructor() {
@@ -2948,9 +3391,6 @@ class Windows11PersonalFeatures {
 
     // Add random tech facts to console
     this.addTechFacts();
-
-    // Add weather widget (mock)
-    //this.addWeatherWidget();
   }
 
   updateGreeting() {
@@ -2993,308 +3433,18 @@ class Windows11PersonalFeatures {
 
   addTechFacts() {
     const facts = [
-      "💡 Fun fact: The first computer bug was literally a bug - a moth found in a relay!",
-      "🚀 Did you know: JavaScript was created in just 10 days by Brendan Eich!",
-      "⚡ Cool: The term 'debugging' was coined by Grace Hopper in 1947!",
-      "🎯 Amazing: There are over 700 programming languages in existence!",
-      "🌟 Interesting: The first website ever created is still online: info.cern.ch",
-      "🔥 Mind-blowing: Google processes over 8.5 billion searches per day!",
-      "💻 Wild: The average person checks their phone 96 times per day!",
+      "Fun fact: The first computer bug was literally a bug - a moth found in a relay!",
+      "Did you know: JavaScript was created in just 10 days by Brendan Eich!",
+      "Cool: The term 'debugging' was coined by Grace Hopper in 1947!",
+      "Amazing: There are over 700 programming languages in existence!",
+      "Interesting: The first website ever created is still online: info.cern.ch",
+      "Mind-blowing: Google processes over 8.5 billion searches per day!",
+      "Wild: The average person checks their phone 96 times per day!",
     ];
 
     const randomFact = facts[Math.floor(Math.random() * facts.length)];
     // Random fact display disabled for production
   }
-
-  async getUserLocation() {
-    return new Promise((resolve, reject) => {
-      if (!navigator.geolocation) {
-        reject("Geolocation not supported");
-        return;
-      }
-
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          resolve(`${latitude},${longitude}`);
-        },
-        (error) => {
-          // Location access denied, using default location
-          resolve("Johannesburg"); //
-        },
-        { timeout: 5000 }
-      );
-    });
-  }
-
-  /*
-  async addWeatherWidget() {
-    const weather = document.createElement("div");
-    weather.id = "weatherWidget";
-    weather.style.cssText = `
-    position: absolute;
-    left: 1em;
-    top: 50%;
-    transform: translateY(-50%);
-    color: white;
-    font-size: 12px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    padding: 4px 8px;
-    border-radius: 4px;
-    transition: background 0.2s ease;
-`;
-
-    // Add loading state
-    weather.innerHTML = `<i class="fas fa-spinner fa-spin" style="color: #ffd700;"></i> <span>Loading...</span>`;
-
-    document.querySelector(".taskbar").appendChild(weather);
-
-    // Fetch weather data only once
-    try {
-      const weatherData = await this.fetchWeatherData();
-      this.updateWeatherWidget(weather, weatherData);
-
-      // Update weather every 10 minutes
-      setInterval(async () => {
-        try {
-          const updatedData = await this.fetchWeatherData();
-          this.updateWeatherWidget(weather, updatedData);
-        } catch (error) {
-          // Weather update failed silently
-        }
-      }, 10 * 60 * 1000); // 10 minutes
-    } catch (error) {
-      console.error("Weather fetch failed:", error);
-      this.updateWeatherWidget(weather, null);
-    }
-
-    // Add click handler for detailed weather
-    weather.addEventListener("click", () => {
-      this.showDetailedWeather();
-    });
-  }
-
-  async fetchWeatherData(city = "Johannesburg") {
-    const API_KEY = "6d12123f7e334c2e887173005250107";
-    const API_URL = `http://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${city}&aqi=no`;
-
-    try {
-      const response = await fetch(API_URL);
-
-      if (!response.ok) {
-        throw new Error(`Weather API error: ${response.status}`);
-      }
-
-      const data = await response.json();
-      return data;
-    } catch (error) {
-      console.error("Error fetching weather:", error);
-      throw error;
-    }
-  }
-
-  // Add this method to update the weather widget
-  updateWeatherWidget(weatherElement, data) {
-    if (!data) {
-      // Fallback if API fails
-      weatherElement.innerHTML = `<i class="fas fa-cloud" style="color: #ccc;"></i> <span>Weather unavailable</span>`;
-      return;
-    }
-
-    const { current, location } = data;
-    const temp = Math.round(current.temp_c);
-    const condition = current.condition.text;
-    const icon = this.getWeatherIcon(current.condition.code, current.is_day);
-
-    weatherElement.innerHTML = `
-    <i class="${icon.class}" style="color: ${icon.color};"></i>
-    <span>${temp}°C</span>
-    <span style="opacity: 0.8; font-size: 1em;">${location.name}</span>
-`;
-
-    // Add tooltip
-    weatherElement.title = `${condition} in ${
-      location.name
-    }\nFeels like ${Math.round(current.feelslike_c)}°C\nHumidity: ${
-      current.humidity
-    }%`;
-  }
-
-  // Add this method to get appropriate weather icons
-  getWeatherIcon(conditionCode, isDay) {
-    const icons = {
-      // Sunny/Clear
-      1000: {
-        day: { class: "fas fa-sun", color: "#ffd700" },
-        night: { class: "fas fa-moon", color: "#f0f0f0" },
-      },
-      // Partly cloudy
-      1003: {
-        day: { class: "fas fa-cloud-sun", color: "#87ceeb" },
-        night: { class: "fas fa-cloud-moon", color: "#d3d3d3" },
-      },
-      // Cloudy
-      1006: { class: "fas fa-cloud", color: "#87ceeb" },
-      1009: { class: "fas fa-cloud", color: "#696969" },
-      // Rain
-      1063: { class: "fas fa-cloud-rain", color: "#4682b4" },
-      1180: { class: "fas fa-cloud-rain", color: "#4682b4" },
-      1183: { class: "fas fa-cloud-rain", color: "#4682b4" },
-      1186: { class: "fas fa-cloud-rain", color: "#4682b4" },
-      1189: { class: "fas fa-cloud-rain", color: "#4682b4" },
-      1192: { class: "fas fa-cloud-showers-heavy", color: "#191970" },
-      1195: { class: "fas fa-cloud-showers-heavy", color: "#191970" },
-      // Snow
-      1066: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1210: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1213: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1216: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1219: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1222: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      1225: { class: "fas fa-snowflake", color: "#e0e0e0" },
-      // Thunderstorm
-      1087: { class: "fas fa-bolt", color: "#ffd700" },
-      1273: { class: "fas fa-bolt", color: "#ffd700" },
-      1276: { class: "fas fa-bolt", color: "#ffd700" },
-      // Fog/Mist
-      1135: { class: "fas fa-smog", color: "#d3d3d3" },
-      1147: { class: "fas fa-smog", color: "#d3d3d3" },
-    };
-
-    const iconData = icons[conditionCode];
-
-    if (iconData) {
-      // If day/night specific icons exist
-      if (iconData.day && iconData.night) {
-        return isDay ? iconData.day : iconData.night;
-      }
-      // Otherwise use the general icon
-      return iconData;
-    }
-
-    // Default icon
-    return { class: "fas fa-cloud", color: "#87ceeb" };
-  }
-
-  showDetailedWeather() {
-    // Remove any existing weather popup first
-    const existingPopup = document.querySelector(".weather-popup");
-    if (existingPopup) {
-      existingPopup.remove();
-    }
-
-    // Create detailed weather popup
-    const popup = document.createElement("div");
-    popup.className = "weather-popup";
-    popup.style.cssText = `
-    position: fixed;
-    bottom: 70px;
-    right: 20px;
-    width: 300px;
-    background: rgba(32, 32, 32, 0.95);
-    backdrop-filter: blur(40px);
-    color: white;
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.3);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    z-index: 10001;
-    animation: slideInWeather 0.3s ease-out;
-`;
-
-    popup.innerHTML = `
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
-        <h3 style="margin: 0; font-size: 16px;">Weather Details</h3>
-        <button onclick="this.parentElement.parentElement.remove()" 
-                style="background: none; border: none; color: white; font-size: 18px; cursor: pointer; padding: 0; width: 24px; height: 24px;">×</button>
-    </div>
-    <div class="detailed-weather-content">
-        <i class="fas fa-spinner fa-spin" style="color: #ffd700;"></i> Loading detailed weather...
-    </div>
-`;
-
-    document.body.appendChild(popup);
-
-    // Fetch and display detailed weather - pass the popup reference
-    this.loadDetailedWeather(popup);
-
-    // Auto-close after 10 seconds
-    setTimeout(() => {
-      if (popup.parentElement) {
-        popup.remove();
-      }
-    }, 10000);
-  }
-
-  // Modify this method to accept popup reference
-  async loadDetailedWeather(popup) {
-    try {
-      const data = await this.fetchWeatherData();
-      const content = popup.querySelector(".detailed-weather-content");
-
-      if (content && data) {
-        const { current, location } = data;
-
-        content.innerHTML = `
-            <div style="text-align: center; margin-bottom: 16px;">
-                <div style="font-size: 24px; margin-bottom: 8px;">
-                   ${Math.round(current.temp_c)}°C
-                </div>
-                <div style="opacity: 0.8;">${current.condition.text}</div>
-                <div style="font-size: 12px; opacity: 0.6;">${location.name}, ${
-          location.country
-        }</div>
-            </div>
-            
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px; font-size: 12px;">
-                <div>
-                    <strong>Feels like:</strong><br>
-                    ${Math.round(current.feelslike_c)}°C
-                </div>
-                <div>
-                    <strong>Humidity:</strong><br>
-                    ${current.humidity}%
-                </div>
-                <div>
-                    <strong>Wind:</strong><br>
-                    ${current.wind_mph} km/h ${current.wind_dir}
-                </div>
-                <div>
-                    <strong>Visibility:</strong><br>
-                    ${current.vis_km} km
-                </div>
-                <div>
-                    <strong>UV Index:</strong><br>
-                    ${current.uv}
-                </div>
-                <div>
-                    <strong>Pressure:</strong><br>
-                    ${current.pressure_in} in
-                </div>
-            </div>
-            
-            <div style="margin-top: 12px; font-size: 11px; opacity: 0.6; text-align: center;">
-                Last updated: ${new Date(
-                  current.last_updated
-                ).toLocaleTimeString()}
-            </div>
-        `;
-      }
-    } catch (error) {
-      const content = popup.querySelector(".detailed-weather-content");
-      if (content) {
-        content.innerHTML = `
-            <div style="color: #ff6b6b; text-align: center;">
-                <i class="fas fa-exclamation-triangle"></i><br>
-                Unable to load weather data
-            </div>
-        `;
-      }
-    }
-  }*/
 
   setupInteractiveElements() {
     // Enhanced hover effects for project cards
@@ -3913,6 +4063,7 @@ document.addEventListener("DOMContentLoaded", () => {
   windowManager = new Windows11Manager();
   window.windowManager = windowManager;
   window.personalFeatures = new Windows11PersonalFeatures();
+  window.portfolioTerminal = new PortfolioTerminal();
   // Easter eggs removed for professional portfolio
   // kanbanManager = new KanbanManager();
   // window.kanbanManager = kanbanManager;
@@ -3922,6 +4073,14 @@ document.addEventListener("DOMContentLoaded", () => {
   window.minimizeWindow = (windowId) => windowManager.minimizeWindow(windowId);
   window.maximizeWindow = (windowId) => windowManager.maximizeWindow(windowId);
   window.showStartMenu = () => windowManager.toggleStartMenu();
+
+  // Sync the taskbar tray theme icon with the persisted theme.
+  const isDark =
+    document.documentElement.getAttribute("data-theme") === "dark";
+  const trayThemeIcon = document.querySelector("#trayThemeToggle i");
+  if (trayThemeIcon) {
+    trayThemeIcon.className = isDark ? "fas fa-sun" : "fas fa-moon";
+  }
 
   // Welcome notification
   setTimeout(() => {

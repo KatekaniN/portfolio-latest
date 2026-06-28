@@ -1,0 +1,46 @@
+<div
+        class="window"
+        id="terminal"
+        style="top: 140px; left: 260px; width: 720px; height: 480px"
+      >
+        <div class="window-header">
+          <div class="window-title">
+            <i class="fas fa-terminal"></i> Terminal
+          </div>
+          <div class="window-controls">
+            <button
+              class="window-control minimize"
+              onclick="windowManager.minimizeWindow('terminal')"
+              title="Minimize"
+            ></button>
+            <button
+              class="window-control maximize"
+              onclick="windowManager.maximizeWindow('terminal')"
+              title="Maximize"
+            ></button>
+            <button
+              class="window-control close"
+              onclick="windowManager.closeWindow('terminal')"
+              title="Close"
+            ></button>
+          </div>
+        </div>
+        <div
+          class="window-content terminal-content"
+          onclick="document.getElementById('terminalInput') && document.getElementById('terminalInput').focus()"
+        >
+          <div id="terminalOutput" class="terminal-output"></div>
+          <div class="terminal-input-line">
+            <span class="terminal-prompt">visitor@katekani:~$</span>
+            <input
+              id="terminalInput"
+              class="terminal-input"
+              type="text"
+              autocomplete="off"
+              autocapitalize="off"
+              spellcheck="false"
+              aria-label="Terminal input"
+            />
+          </div>
+        </div>
+      </div>

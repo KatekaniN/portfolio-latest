@@ -1,0 +1,167 @@
+<div
+        class="window"
+        id="games"
+        style="top: 120px; left: 220px; width: 720px; height: 520px"
+      >
+        <div class="window-header">
+          <div class="window-title"><i class="fas fa-gamepad"></i> Games</div>
+          <div class="window-controls">
+            <button
+              class="window-control minimize"
+              onclick="windowManager.minimizeWindow('games')"
+              title="Minimize"
+            ></button>
+            <button
+              class="window-control maximize"
+              onclick="windowManager.maximizeWindow('games')"
+              title="Maximize"
+            ></button>
+            <button
+              class="window-control close"
+              onclick="windowManager.closeWindow('games')"
+              title="Close"
+            ></button>
+          </div>
+        </div>
+        <div
+          class="window-content"
+          style="display: flex; flex-direction: column; gap: 12px"
+        >
+          <div
+            style="
+              display: flex;
+              align-items: center;
+              justify-content: space-between;
+              gap: 12px;
+            "
+          >
+            <div style="display: flex; align-items: center; gap: 12px">
+              <div id="games-title" style="font-weight: 600">Snake</div>
+              <div id="games-score" style="opacity: 0.8">Score: 0</div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 8px">
+              <label
+                style="
+                  font-size: 12px;
+                  opacity: 0.8;
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                "
+              >
+                Game
+                <select
+                  id="games-game"
+                  style="
+                    padding: 4px 6px;
+                    border-radius: 6px;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    background: rgba(255, 255, 255, 0.06);
+                    color: #2032a7;
+                  "
+                >
+                  <option value="snake" selected>Snake</option>
+                  <option value="pong">Pong</option>
+                  <option value="flappy">Flappy</option>
+                </select>
+              </label>
+              <button
+                id="games-start"
+                style="
+                  padding: 6px 10px;
+                  border-radius: 6px;
+                  border: none;
+                  background: #1e90ff;
+                  color: #fff;
+                  cursor: pointer;
+                "
+              >
+                Start
+              </button>
+              <button
+                id="games-pause"
+                style="
+                  padding: 6px 10px;
+                  border-radius: 6px;
+                  border: none;
+                  background: #5a606b;
+                  color: #fff;
+                  cursor: pointer;
+                "
+              >
+                Pause
+              </button>
+              <button
+                id="games-restart"
+                style="
+                  padding: 6px 10px;
+                  border-radius: 6px;
+                  border: none;
+                  background: #059b69;
+                  color: #fff;
+                  cursor: pointer;
+                "
+              >
+                Restart
+              </button>
+              <label
+                style="
+                  font-size: 12px;
+                  opacity: 0.8;
+                  display: flex;
+                  align-items: center;
+                  gap: 6px;
+                "
+              >
+                Speed
+                <select
+                  id="games-speed"
+                  style="
+                    padding: 4px 6px;
+                    border-radius: 6px;
+                    border: 1px solid rgba(255, 255, 255, 0.15);
+                    background: rgba(255, 255, 255, 0.06);
+                    color: #2032a7;
+                  "
+                >
+                  <option value="130">Easy</option>
+                  <option value="100" selected>Normal</option>
+                  <option value="70">Hard</option>
+                </select>
+              </label>
+            </div>
+          </div>
+          <div
+            id="games-stage"
+            style="
+              flex: 1;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              background: rgba(255, 255, 255, 0.04);
+              border: 1px solid rgba(255, 255, 255, 0.08);
+              border-radius: 12px;
+              overflow: hidden;
+            "
+          >
+            <canvas
+              id="games-canvas"
+              width="640"
+              height="400"
+              style="
+                width: 100%;
+                height: 100%;
+                background: rgba(0, 0, 0, 0.25);
+                display: block;
+              "
+            ></canvas>
+          </div>
+          <div
+            id="games-help"
+            style="font-size: 12px; opacity: 0.7; text-align: center"
+          >
+            Use arrow keys or WASD to move. Eat the squares, avoid walls and
+            yourself.
+          </div>
+        </div>
+      </div>

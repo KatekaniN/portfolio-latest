@@ -1,0 +1,140 @@
+/* Desktop Icons - Windows 11 Style */
+.desktop-icon {
+  position: absolute;
+  width: 88px;
+  height: 100px;
+  box-shadow: 0 4px 12px rgba(60, 65, 70, 0.3);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  padding: 12px 8px;
+  border-radius: 8px;
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.desktop-icon:hover {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+.desktop-icon.selected {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.icon-image {
+  width: 56px;
+  height: 56px;
+  background-color: transparent;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: pink;
+  font-size: 28px; /* Controls FontAwesome icon size */
+  margin-bottom: 8px;
+  box-shadow:
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    0 1px 2px rgba(0, 0, 0, 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+  transition: all 0.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  overflow: hidden; /* Important for image icons */
+}
+
+.desktop-icon:hover .icon-image {
+  transform: scale(1.05);
+  box-shadow:
+    0 4px 16px rgba(0, 0, 0, 0.3),
+    0 2px 4px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+.icon-label {
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.5);
+  line-height: 1.2;
+  font-weight: 400;
+  max-width: 80px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media screen and (max-width: 768px) {
+  .desktop-icon {
+    width: 76px;
+    height: 88px;
+  }
+
+  .icon-image {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+
+  .icon-label {
+    font-size: 11px;
+    max-width: 60px;
+  }
+}
+
+.icon-image img {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  /*filter: brightness(0) invert(1);  Makes images white */
+}
+
+/* Alternative: if you want larger custom icons */
+.icon-image.large img {
+  width: 40px;
+  height: 40px;
+}
+
+/* Alternative: if you want smaller custom icons */
+.icon-image.small img {
+  width: 24px;
+  height: 24px;
+}
+
+/* For FontAwesome icons - control size with font-size */
+.icon-image i {
+  font-size: 28px; /* Adjust this for FontAwesome icons */
+}
+
+/* Larger FontAwesome icons */
+.icon-image.large i {
+  font-size: 32px;
+}
+
+/* Smaller FontAwesome icons */
+.icon-image.small i {
+  font-size: 24px;
+}
+
+/* If you want to adjust the container size too */
+.desktop-icon.large {
+  width: 100px;
+  height: 120px;
+}
+
+.desktop-icon.large .icon-image {
+  width: 68px;
+  height: 68px;
+}
+
+.desktop-icon.small {
+  width: 76px;
+  height: 88px;
+}
+
+.desktop-icon.small .icon-image {
+  width: 48px;
+  height: 48px;
+}
+

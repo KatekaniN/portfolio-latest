@@ -1,0 +1,120 @@
+/* Windows 11 Taskbar */
+.taskbar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 56px;
+  background: var(--chrome-bg);
+  backdrop-filter: blur(40px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 16px;
+  z-index: 2000;
+  border-top: 1px solid var(--chrome-border);
+}
+
+.taskbar-center {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+}
+
+.start-button {
+  background: transparent;
+  color: var(--chrome-text);
+  border: none;
+  padding: 8px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.start-button:hover {
+  background: var(--chrome-hover);
+}
+
+.start-button:active {
+  background: var(--chrome-hover-strong);
+  transform: scale(0.98);
+}
+
+.open-windows {
+  display: flex;
+  gap: 4px;
+  margin-left: 8px;
+}
+
+.taskbar-window {
+  padding: 8px 12px;
+  background: var(--chrome-hover);
+  color: var(--chrome-text);
+  border-radius: 6px;
+  font-size: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 120px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.taskbar-window:hover {
+  background: var(--chrome-hover-strong);
+}
+
+.taskbar-window.active {
+  background: rgba(0, 120, 212, 0.6);
+  border: 1px solid rgba(0, 120, 212, 0.8);
+}
+
+.taskbar-time {
+  position: absolute;
+  right: 16px;
+  color: var(--chrome-text);
+  font-size: 13px;
+  font-weight: 400;
+  text-align: right;
+  line-height: 1.3;
+}
+
+/* System tray (right side, before the clock) */
+.taskbar-tray {
+  position: absolute;
+  right: 72px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.tray-button {
+  width: 36px;
+  height: 36px;
+  background: transparent;
+  border: none;
+  border-radius: 6px;
+  color: var(--chrome-text);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  transition: all 0.15s ease;
+}
+
+.tray-button:hover {
+  background: var(--chrome-hover);
+}
+
+.tray-button:active {
+  background: var(--chrome-hover-strong);
+  transform: scale(0.96);
+}
+
