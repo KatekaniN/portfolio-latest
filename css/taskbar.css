@@ -88,7 +88,7 @@
 /* System tray (right side, before the clock) */
 .taskbar-tray {
   position: absolute;
-  right: 72px;
+  right: 92px;
   display: flex;
   align-items: center;
   gap: 4px;
