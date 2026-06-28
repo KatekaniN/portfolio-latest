@@ -104,18 +104,17 @@ Windows11Manager.prototype.createNotificationCenter = function () {
 
     // Close when clicking outside
     setTimeout(() => {
-      document.addEventListener(
-        "click",
-        (e) => {
-          if (
-            !notificationCenter.contains(e.target) &&
-            !document.getElementById("clock").contains(e.target)
-          ) {
-            notificationCenter.remove();
-          }
-        },
-        { once: true }
-      );
+      const closeOnOutside = (e) => {
+        const clock = document.getElementById("clock");
+        if (
+          !notificationCenter.contains(e.target) &&
+          !(clock && clock.contains(e.target))
+        ) {
+          notificationCenter.remove();
+          document.removeEventListener("click", closeOnOutside);
+        }
+      };
+      document.addEventListener("click", closeOnOutside);
     }, 100);
   };
 
@@ -326,14 +325,8 @@ Windows11Manager.prototype.addToNotificationHistory = function (title, body, ico
   };
 
 Windows11Manager.prototype.renderNotificationHistory = function () {
-    if (this.notificationHistory.length === 0) {
-      return `
-        <div class="no-notifications">
-          <i class="fas fa-bell-slash" style="font-size: 32px; opacity: 0.3; margin-bottom: 8px;"></i>
-          <div style="opacity: 0.6; font-size: 14px;">No notifications</div>
-          <div style="opacity: 0.4; font-size: 12px;">You're all caught up!</div>
-        </div>
-      `;
+    if (!this.notificationHistory || this.notificationHistory.length === 0) {
+      return "";
     }
 
     return this.notificationHistory
@@ -353,7 +346,7 @@ Windows11Manager.prototype.renderNotificationHistory = function () {
               <span class="notification-item-time">${timeAgo} <i class="fas fa-chevron-down"></i></span>
             </div>
             <div class="notification-item-subtitle">Re: ${notification.title}</div>
-            <div class="notification-item-body">${notification.body}</div>
+            <div class="notification-item-body">${notification.body || ""}</div>
             <div class="notification-item-source">Portfolio • Notification</div>
           </div>
           <button class="notification-dismiss-btn" onclick="event.stopPropagation(); windowManager.dismissNotification('${notification.id}')" title="Dismiss">
